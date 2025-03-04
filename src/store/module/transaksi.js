@@ -112,7 +112,7 @@ const actions = {
         }) 
     }else{      
       axios({
-        url: `https://kueku-server-15ecaf79af24.herokuapp.com/transaksi`,
+        url: `http://5.181.218.34:3001/transaksi`,
         method: 'post',
         headers:{
             token : payload.pin 

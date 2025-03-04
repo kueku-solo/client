@@ -431,7 +431,7 @@
           } else{        
             this.allPenjualan
             axios({
-              url: `https://kueku-server-15ecaf79af24.herokuapp.com/transaksi/by?kode=${this.src}`,
+              url: `http://5.181.218.34:3001/transaksi/by?kode=${this.src}`,
               method: 'get',
               headers:{
                   token : localStorage.getItem('token')
@@ -454,12 +454,11 @@
           }         
         },         
         fetchAllPenjualan(){
-            console.log(this.date1)
             this.src = ''
             this.allPenjualan = []
             this.loading = true
             axios({
-                url: `https://kueku-server-15ecaf79af24.herokuapp.com/transaksi?mulai=${this.date1}&akhir=${this.date2}`,
+                url: `http://5.181.218.34:3001/transaksi?mulai=${this.date1}&akhir=${this.date2}`,
                 method: 'get',
                 headers:{
                     token : localStorage.getItem('token')
@@ -537,7 +536,7 @@
                             
                     } else if (result.isDenied) {
                         axios({
-                        url: `https://kueku-server-15ecaf79af24.herokuapp.com/transaksi/batal/${id}`,
+                        url: `http://5.181.218.34:3001/transaksi/batal/${id}`,
                         method: 'put',
                         headers:{
                             token : localStorage.getItem('token')
@@ -559,7 +558,7 @@
             this.dialog = false
             this.loading2 = true
             axios({
-                    url: `https://kueku-server-15ecaf79af24.herokuapp.com/transaksi/refund/${this.tempIdTransaksi}`,
+                    url: `http://5.181.218.34:3001/transaksi/refund/${this.tempIdTransaksi}`,
                     method: 'put',
                     headers:{
                         token : localStorage.getItem('token')

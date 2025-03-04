@@ -166,7 +166,7 @@
         },
         fetchItem(){
             axios({
-              url: `https://kueku-server-15ecaf79af24.herokuapp.com/item/history`,
+              url: `http://5.181.218.34:3001/item/history`,
               method: 'get',
               headers:{
                   token : localStorage.getItem('token')
@@ -190,7 +190,7 @@
             }         
             this.loading = true
             axios({
-              url: `https://kueku-server-15ecaf79af24.herokuapp.com/item/search/history?src=${this.src}&page=${this.currentPage}&limit=${this.perPage}`,
+              url: `http://5.181.218.34:3001/item/search/history?src=${this.src}&page=${this.currentPage}&limit=${this.perPage}`,
               method: 'get',
               headers:{
                   token : localStorage.getItem('token')
@@ -209,7 +209,7 @@
             this.src = ''
             this.loading = true
             axios({
-                url: `https://kueku-server-15ecaf79af24.herokuapp.com/item/search/date/history?mulai=${this.date1}&akhir=${this.date2}`,
+                url: `http://5.181.218.34:3001/item/search/date/history?mulai=${this.date1}&akhir=${this.date2}`,
                 method: 'get',
                 headers:{
                     token : localStorage.getItem('token')

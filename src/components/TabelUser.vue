@@ -216,7 +216,7 @@
                     this.password = '-'
                 }
                 axios({
-                    url: `https://kueku-server-15ecaf79af24.herokuapp.com/user/admin/${this.tempId}`,
+                    url: `http://5.181.218.34:3001/user/admin/${this.tempId}`,
                     method: 'put',
                     headers:{
                         token : localStorage.getItem('token')
@@ -264,7 +264,7 @@
                             
                     } else if (result.isDenied) {
                         axios({
-                        url: `https://kueku-server-15ecaf79af24.herokuapp.com/user/${id}`,
+                        url: `http://5.181.218.34:3001/user/${id}`,
                         method: 'delete',
                         headers:{
                             token : localStorage.getItem('token')

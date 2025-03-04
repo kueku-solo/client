@@ -6,8 +6,6 @@
                 <br>instagram : kueku_solo</p>
             <small>___________________________</small>
             <div>
-                <small>Id.Transaksi : {{transaksi._id}}</small>
-                <br>
                 <small>Tanggal : {{this.getTanggal(transaksi.createdAt)}}</small>
                 <br>
                 <small>Jam : {{transaksi.jam}}</small>

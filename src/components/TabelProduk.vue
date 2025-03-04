@@ -32,7 +32,7 @@
               <v-icon color="green"  small>mdi-file-document-edit</v-icon>
             </a> 
 
-            <a @click="formEditStokAdmin(item)" v-if="getRole === 'super'" class="mr-2">
+            <a @click="formEditStokAdmin(item)" v-if="getRole === 'super' || getRole === 'admin'" class="mr-2">
               <v-icon color="green" small>mdi-store-edit-outline</v-icon>
             </a>             
                 
@@ -343,7 +343,7 @@
             this.fillLoading(true)
             this.allData = []
             axios({
-              url: `https://kueku-server-15ecaf79af24.herokuapp.com/item?page=1&limit=5`,
+              url: `http://5.181.218.34:3001/item?page=1&limit=5`,
               method: 'get',
               headers:{
                   token : localStorage.getItem('token')
@@ -360,7 +360,7 @@
             this.fillLoading(true)
             this.allData = []
             axios({
-              url: `https://kueku-server-15ecaf79af24.herokuapp.com/item/search?src=${this.src}`,
+              url: `http://5.181.218.34:3001/item/search?src=${this.src}`,
               method: 'get',
               headers:{
                   token : localStorage.getItem('token')
@@ -487,7 +487,7 @@
                 if(!this.loading2){             
                   this.loading2 = true
                     axios({
-                        url: `https://kueku-server-15ecaf79af24.herokuapp.com/item/${this.tempId}`,
+                        url: `http://5.181.218.34:3001/item/${this.tempId}`,
                         method: 'put',
                         headers:{
                             token : localStorage.getItem('token')
@@ -526,7 +526,7 @@
         editStokAdmin(){
                 this.loading2 = true  
                 axios({
-                    url: `https://kueku-server-15ecaf79af24.herokuapp.com/item/editstok/${this.tempId}`,
+                    url: `http://5.181.218.34:3001/item/editstok/${this.tempId}`,
                     method: 'put',
                     headers:{
                         token : localStorage.getItem('token')
@@ -562,7 +562,7 @@
         editBarcode(){          
                 this.loading2 = true  
                 axios({
-                    url: `https://kueku-server-15ecaf79af24.herokuapp.com/item/editkode/${this.tempId}`,
+                    url: `http://5.181.218.34:3001/item/editkode/${this.tempId}`,
                     method: 'put',
                     headers:{
                         token : localStorage.getItem('token')
@@ -608,7 +608,7 @@
                             
                     } else if (result.isDenied) {
                         axios({
-                        url: `https://kueku-server-15ecaf79af24.herokuapp.com/item/${id}`,
+                        url: `http://5.181.218.34:3001/item/${id}`,
                         method: 'delete',
                         headers:{
                             token : localStorage.getItem('token')

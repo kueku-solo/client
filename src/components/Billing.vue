@@ -6,8 +6,6 @@
                 <br>instagram : kueku_solo</p>
             <small>___________________________</small>
             <div>
-                <small>Id.Transaksi : {{transaksi.id}}</small>
-                <br>
                 <small>Tanggal : {{getDateFull}}</small>
                 <br>
                 <small>Jam : {{transaksi.jam}}</small>
@@ -19,7 +17,7 @@
             <div v-for="item in items" :key="item._id">
                 <small>- {{item.nama}}</small>
                 <br>
-                <small v-if="Number(item.qty) < 3">Rp {{ getRupiah(item.hargaEcer)  }} x {{item.qty}} = Rp {{getRupiah(item.hargaEcer * item.qty)}}</small>
+                <small v-if="Number(item.qty) < 3">Rp {{ getRupiah(item.harga)  }} x {{item.qty}} = Rp {{getRupiah(item.harga * item.qty)}}</small>
                 <small v-if="Number(item.qty) >= 3">Rp {{ getRupiah(getHargaGrosir(item))  }} x {{item.qty}} = Rp {{getRupiah(getTotalHargaGrosir(item))}}</small>
                 <br>
                 <p></p>
