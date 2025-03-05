@@ -21,7 +21,7 @@ const actions = {
       context.commit('fillLoading',true)
       context.commit('fillData',[])
       axios({
-        url: `http://5.181.218.34:3001/item?page=${payload}&limit=${limit}`,
+        url: `https://kueku-server-15ecaf79af24.herokuapp.com/item?page=${payload}&limit=${limit}`,
         method: 'get',
         headers:{
             token : localStorage.getItem('token')

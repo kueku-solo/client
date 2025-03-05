@@ -242,7 +242,7 @@
             this.loading = true
             this.allShift = []
             axios({
-                url: `http://5.181.218.34:3001/shift?mulai=${this.date1}&akhir=${this.date2}`,
+                url: `https://kueku-server-15ecaf79af24.herokuapp.com/shift?mulai=${this.date1}&akhir=${this.date2}`,
                 method: 'get',
                 headers:{
                     token : localStorage.getItem('token')

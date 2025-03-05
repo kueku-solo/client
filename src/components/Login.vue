@@ -77,7 +77,7 @@ export default {
     login(){
         this.loading = true
        axios({
-            url: `http://5.181.218.34:3001/user/admin/login`,
+            url: `https://kueku-server-15ecaf79af24.herokuapp.com/user/admin/login`,
             method: 'post',
             data:{
               email: this.email,

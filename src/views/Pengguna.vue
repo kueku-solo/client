@@ -180,7 +180,7 @@
         tambahUser(){
                 this.loading2 = true      
                 axios({
-                    url: `http://5.181.218.34:3001/user/admin/register`,
+                    url: `https://kueku-server-15ecaf79af24.herokuapp.com/user/admin/register`,
                     method: 'post',
                     headers:{
                         token : localStorage.getItem('token')
