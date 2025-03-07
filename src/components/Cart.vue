@@ -27,7 +27,7 @@
         </template>             
         <template #cell(Delete)="row">
             <a @click="deleteItem(row.index)">
-              <v-icon color="red" v-b-popover.hover.top="'Delete Item'" small>mdi-delete</v-icon>
+              <v-icon color="red" small>mdi-delete</v-icon>
             </a>                                
         </template>                                        
     </b-table>                

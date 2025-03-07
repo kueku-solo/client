@@ -16,13 +16,12 @@
           <p>{{row.item.email}}</p>
         </template>     
         <template #cell(KodeUser)="row">
-          <p>{{row.item.barcode}}</p>
+          <p>{{row.item.pin}}</p>
         </template>         
         <template #cell(Role)="row">
             <b-badge variant="primary" v-if="row.item.role === 'admin'">ADMIN</b-badge> 
             <b-badge variant="success" v-if="row.item.role === 'kasir'">KASIR</b-badge>          
-            <b-badge variant="warning" v-if="row.item.role === 'super'">SUPER</b-badge>
-            <b-badge variant="primary" v-if="row.item.role === 'barcode'">BARCODE</b-badge>          
+            <b-badge variant="warning" v-if="row.item.role === 'super'">SUPER</b-badge>         
         </template>          
         <template #cell(Action)="row">
             <a @click="formEdit(row.item)">
@@ -61,7 +60,7 @@
                         label="Username"    
                         outlined                        
                         clearable
-                        v-on:keyup.enter="tambahUser()"
+                        v-on:keyup.enter="editUser()"
                     ></v-text-field>      
                 </v-col>
                 <v-col cols="12" md="10">
@@ -70,7 +69,7 @@
                         :rules="emailRules"
                         label="E-mail"
                         required
-                        v-on:keyup.enter="tambahUser()"
+                        v-on:keyup.enter="editUser()"
                     ></v-text-field>      
                 </v-col>
             </v-row>
@@ -79,6 +78,7 @@
                   <b-button v-b-toggle.collapse-1 variant="outline-secondary">Reset Password</b-button>
                   <b-collapse id="collapse-1" class="mt-2">              
                     <v-text-field
+                        v-on:keyup.enter="editUser()"
                         v-model="password"
                         :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
                         :rules="[rules.required, rules.min]"
@@ -200,11 +200,7 @@
 
         // edit user
         formEdit(data){
-            if(data.pin){
-              this.pin = data.pin
-            }else{
-              this.pin = '0000'
-            }
+            this.pin = data.pin
             this.dialog = true
             this.tempId = data._id
             this.username=data.username,
@@ -230,11 +226,12 @@
                     }
                     })
                     .then(({data}) =>{
-                        Swal.fire(
-                          'Berhasil!',
-                          'sukses edit user!',
-                          'success'
-                        )                      
+                      Swal.fire({
+                        icon: "success",
+                        title: "Pengguna Berhasil diEdit",
+                        showConfirmButton: false,
+                        timer: 1500
+                      });
                         this.dialog = false
                         this.username=''
                         this.email=''
@@ -271,7 +268,12 @@
                         }
                         })
                         .then((respone) =>{
-                            Swal.fire('deleted!', '', 'success')
+                            Swal.fire({
+                              icon: "success",
+                              title: "Hapus Pengguna Berhasil",
+                              showConfirmButton: false,
+                              timer: 1500
+                            });
                             this.fetchUser(this.currentPage,this.perPage)       
                         })                   
                     }

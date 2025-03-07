@@ -28,7 +28,7 @@
                         label="Nama Barang"    
                         outlined                        
                         clearable
-                        v-on:keyup.alt="tambahItem()"
+                        v-on:keyup.enter="tambahItem()"
                     ></v-text-field>      
                 </v-col>
                 <v-col cols="12" md="2">                  
@@ -38,26 +38,37 @@
                     v-model="stok"
                     suffix="pcs"
                     type=number                
-                    v-on:keyup.alt="tambahItem()"                                           
+                    v-on:keyup.enter="tambahItem()"                                           
                     ></v-text-field>
                 </v-col>
             </v-row>
             <v-row v-if="getRole === 'super'">
-                <v-col cols="6" md="6">                  
+                <v-col cols="12" md="3">                  
                     <v-text-field
-                    label="Harga"
+                    label="Harga Modal"
+                    v-model="modal"
+                    prefix="Rp"                
+                    v-on:keyup.enter="tambahItem()"                                         
+                    ></v-text-field>
+                </v-col>   
+                <v-col cols="12" md="3">                  
+                    <v-text-field
+                    label="Harga Jual"
                     v-model="harga"
                     prefix="Rp"                
-                    v-on:keyup.alt="tambahItem()"                                         
+                    v-on:keyup.enter="tambahItem()"                                         
                     ></v-text-field>
                 </v-col>    
-                <v-col cols="6" md="6">
+                <v-col cols="12" md="2">                  
+                    Laba = {{ formatRupiahEsc(harga) - formatRupiahEsc(modal) }}
+                </v-col>  
+                <v-col cols="12" md="4">
                     <v-text-field
                         v-model="kodeBarang"
                         label="Kode Barang"    
                         outlined                        
                         clearable
-                        v-on:keyup.alt="tambahItem()"
+                        v-on:keyup.enter="tambahItem()"
                     ></v-text-field>      
                 </v-col>                                   
             </v-row>      
@@ -143,6 +154,7 @@
         dialog: false,
         nama: '',
         stok:0,
+        modal:null,
         harga:null,
         kodeBarang: '',
             // foto
@@ -157,6 +169,21 @@
         Tabel
     },
     watch: {   
+      modal: function(){
+                if(this.modal){
+                var number_string = this.modal.replace(/[^,\d]/g, '').toString()
+                var sisa 	= number_string.length % 3,
+                    rupiah 	= number_string.substr(0, sisa),
+                    ribuan 	= number_string.substr(sisa).match(/\d{3}/g);
+                        
+                if (ribuan) {
+                    this.modal = sisa ? '.' : '';
+                    rupiah += this.modal + ribuan.join('.');
+                }            
+    
+                this.modal = rupiah
+                } 
+            },
       harga: function(){
                 if(this.harga){
                 var number_string = this.harga.replace(/[^,\d]/g, '').toString()
@@ -210,7 +237,7 @@
         formatRupiahEsc(angka){
             let al = "";
             if(angka=="" || angka==null || angka=="null" || angka==undefined){
-                al = "";
+                al = 0;
             } else {
                 al = Math.abs(angka.replace(/[^,\d]/g, '').toString());
             }
@@ -221,6 +248,7 @@
                 let temp = {
                         nama: this.nama,
                         stok:this.stok,
+                        modal : this.formatRupiahEsc(this.modal),
                         harga:this.formatRupiahEsc(this.harga),     
                         image: this.link
                 }
@@ -241,6 +269,7 @@
                         this.kodeBarang = ''
                         this.nama = ''
                         this.stok = 0
+                        this.modal = null
                         this.harga = null
                         this.loading2 = false
                         this.toggleCamera()

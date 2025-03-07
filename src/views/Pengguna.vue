@@ -65,17 +65,6 @@
                     ></v-select>
                 </v-col>                
             </v-row>                 
-            <v-row>
-                <v-col cols="12" md="5">
-                  <h5>Pin :
-
-                    <PincodeInput
-                    v-model="pin"
-                    placeholder="0"
-                    />
-                  </h5>
-                  </v-col>
-            </v-row>   
           </v-container>
         </v-card-text>
         <v-card-actions>
@@ -129,7 +118,6 @@
 </template>
 
 <script>
-  import PincodeInput from 'vue-pincode-input'
   import { mapActions, mapGetters } from 'vuex'
   import axios from 'axios'
   import Swal from 'sweetalert2'
@@ -145,8 +133,7 @@
         email:'',
         password:'',
         items: ['kasir','admin','super', 'barcode'],
-        role:'kasir'    ,
-        pin:'',
+        role:'kasir',
 
         // rules
         emailRules: [
@@ -162,8 +149,7 @@
       }
     },
     components: {
-        Tabel,
-        PincodeInput
+        Tabel
     },
     computed:{
         ...mapGetters({
@@ -189,8 +175,7 @@
                         username:this.username,
                         email:this.email,
                         password:this.password,
-                        role:this.role,
-                        pin:this.pin
+                        role:this.role
                       }
                     })
                     .then(({data}) =>{
@@ -198,7 +183,6 @@
                         this.email = ''
                         this.password = ''
                         this.role = 'kasir'
-                        this.pin=''
                         this.loading2 = false
                         this.dialog = false
                         this.fetchUser()

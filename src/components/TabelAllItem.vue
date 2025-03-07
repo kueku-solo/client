@@ -30,7 +30,7 @@
 
         <template v-slot:item.actions="{ item }">
             <a @click="plusItem(item)">
-              <v-icon color="green" v-b-popover.hover.top="'Tambah Item'" dense>mdi-cart-plus</v-icon>
+              <v-icon color="green" dense>mdi-cart-plus</v-icon>
             </a> 
         </template>    
     </v-data-table>
@@ -156,7 +156,8 @@
               kodeBarang: data.kodeBarang,
               qty: 1,
               stok:data.stok,
-              harga: data.harga
+              harga: data.harga,
+              laba: (Number(data.modal) - Number(data.harga)) * Number(data.stok)
             }
             this.addItem(temp)          
           }

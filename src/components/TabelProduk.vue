@@ -19,8 +19,8 @@
         :per-page="perPage"
     >  
 
-        <template v-slot:item.image="{ item }">
-          <img :src="item.image" width="100" height="50"/>
+        <template v-slot:item.modal="{ item }">
+          <p>Rp {{getRupiah( item.modal)}}</p>
         </template>
 
         <template v-slot:item.harga="{ item }">
@@ -292,10 +292,10 @@
         src: '',
         dataSrc: [],
         headers:[            
-          { text: 'Gambar', value: 'image' },
           { text: 'Nama', value: 'nama' },
+          { text: 'Harga Modal', value: 'modal' },
           { text: 'Stok', value: 'stok' },
-          { text: 'Harga', value: 'harga' },
+          { text: 'Harga Jual', value: 'harga' },
           { text: 'Kode Barang', value: 'kodeBarang'},
             { text: 'Actions', value: 'actions', sortable: false },],        
 
@@ -333,7 +333,7 @@
     },    
     methods:{     
         ...mapActions({
-          fetchItem: 'item/fetchAction',
+          search: 'item/fetchAction',
           }),     
         ...mapMutations({
           fillLoading: 'item/fillLoading'        
@@ -350,6 +350,7 @@
               }
             })      
                   .then(({data})=>{       
+                    console.log(data.results)
                     this.allData = data.results       
                     this.fillLoading(false)
                   })
@@ -597,17 +598,17 @@
                     }) 
         },
         deleteItem(id){
-                Swal.fire({
-                    title: 'Apakah anda yakin akan menghapus?',
-                    showDenyButton: true,
-                    confirmButtonText: `Batal`,
-                    denyButtonText: `Ya,Hapus`,
-                    }).then((result) => {
-                    /* Read more about isConfirmed, isDenied below */
-                    if (result.isConfirmed) {
-                            
-                    } else if (result.isDenied) {
-                        axios({
+          Swal.fire({
+              title: 'Apakah anda yakin ?',
+              text: "Ingin menghapus item ini!",
+              icon: "warning",
+              showCancelButton: true,
+              confirmButtonColor: "#3085d6",
+              cancelButtonColor: "#d33",
+              confirmButtonText: "Ya, hapus item!"
+            }).then((result) => {
+              if (result.isConfirmed) {
+                axios({
                         url: `https://kueku-server-15ecaf79af24.herokuapp.com/item/${id}`,
                         method: 'delete',
                         headers:{
@@ -615,16 +616,16 @@
                         }
                         })
                         .then((respone) =>{
-                            this.fetchItem(1,10)
-                            // if(this.src !== ''){
-                            //   this.search()
-                            // }else{
-                            //   this.allData = []      
-                            // }
-                            Swal.fire('deleted!', '', 'success')
-                        })                   
-                    }
-                })            
+                            this.search()
+                            Swal.fire({
+                              icon: "success",
+                              title: "Hapus Item Berhasil",
+                              showConfirmButton: false,
+                              timer: 1500
+                            });
+                        }) 
+              }
+            });         
         }         
     },
     watch:{
