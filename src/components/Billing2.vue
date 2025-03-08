@@ -1,9 +1,9 @@
 <template>
   <div class="overflow-auto"> 
         <div class="ticket">
-            <p class="centered">KUEKU SOLO
+            <a>KUEKU SOLO
                 <br>Ruko Cendana No.GP19, Grogol, Sukoharjo
-                <br>instagram : kueku_solo</p>
+                <br>instagram : kueku_solo</a>
             <small>___________________________</small>
             <div>
                 <small>Tanggal : {{this.getTanggal(transaksi.createdAt)}}</small>
@@ -41,11 +41,11 @@
             </div>   
             <br>
             <div class="mt-3">
-            <p class="centered">              
+            <a>              
                 TERIMAKASI TELAH BERBELANJA   
                 <br>
                 <br>
-            </p>
+            </a>
             </div>
         </div>
         <!-- <b-button @click.prevent="printOke()" v-if="show">Print</b-button>  -->
@@ -149,8 +149,8 @@
 
 <style scoped>
 * {
-    font-size: 12px;
-    font-family: 'Times New Roman';
+    font-size: 15px;
+    font-family: 'arial';
 }
 
 td,
