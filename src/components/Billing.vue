@@ -156,8 +156,9 @@
 <style scoped>
 * {
     font-size: 15px;
-    font-family: 'arial';
+    font-family: 'calibri';
     font-weight: bold;
+    color: black;
 }
 
 td,
