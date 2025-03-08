@@ -154,7 +154,7 @@
 
 <style scoped>
 * {
-    font-size: 15px;
+    font-size: 17px;
     font-family:'Times New Roman', Times, serif;
     color: black;
 }
@@ -169,21 +169,21 @@ table {
 
 td.description,
 th.description {
-    width: 70mm;
-    max-width: 70mm;
+    width: 58mm;
+    max-width: 58mm;
 }
 
 td.quantity,
 th.quantity {
-    width: 70mm;
-    max-width: 70mm;
+    width: 58mm;
+    max-width: 58mm;
     word-break: break-all;
 }
 
 /* td.price,
 th.price {
-    width: 70mm;
-    max-width: 70mm;
+    width: 58mm;
+    max-width: 58mm;
     word-break: break-all;
 } */
 
@@ -193,8 +193,8 @@ th.price {
 }
 
 .ticket {
-    width: 70mm ;
-    max-width: 70mm;
+    width: 58mm ;
+    max-width: 58mm;
 }
 
 img {
@@ -210,7 +210,7 @@ img {
 }
 
 @page {
-    size:70mm;
+    size:58mm;
     margin: 1mm;
 }
 
