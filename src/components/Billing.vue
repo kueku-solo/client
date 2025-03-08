@@ -7,20 +7,19 @@
                     instagram : kueku_solo
                 </p>
             <div>
-                <small>Tgl:{{getDateFull}}</small>
+                <small>{{getDateFull}}</small>
                 <br>
-                <small>Jam:{{transaksi.jam}}</small>
+                <small>{{transaksi.jam}}</small>
                 <br>
-                <small>Kasir:{{transaksi.kasirName}}</small>    
+                <small>{{transaksi.kasirName}}</small>    
                 <br>            
                 <small>___________________________</small>
             </div>                  
 
             <div v-for="item in items" :key="item._id">
-                <small>- {{item.nama}}</small>
+                <small style="font-weight: bold;">- {{item.nama}}</small>
                 <br>
-                <small v-if="Number(item.qty) < 3">Rp{{ getRupiah(item.harga)  }} x {{item.qty}} = Rp{{getRupiah(item.harga * item.qty)}}</small>
-                <small v-if="Number(item.qty) >= 3">Rp{{ getRupiah(getHargaGrosir(item))  }} x {{item.qty}} = Rp{{getRupiah(getTotalHargaGrosir(item))}}</small>
+                <small >{{getRupiah(item.harga)}} x {{item.qty}} = Rp{{getRupiah(item.harga * item.qty)}}</small>                
                 <br>
                 <p></p>
             </div> 
@@ -32,7 +31,7 @@
                 <br>
                 <small>Diskon:Rp{{getRupiah(transaksi.diskon)}}</small>
                 <br>
-                <small>Total:Rp{{getRupiah(transaksi.total)}}</small>
+                <small style="font-weight: bold;">Total:Rp{{getRupiah(transaksi.total)}}</small>
                 <br>
                 <small>Bayar:Rp{{getRupiah(transaksi.bayar)}}</small>
                 <br>
@@ -156,7 +155,7 @@
 <style scoped>
 * {
     font-size: 15px;
-    font-family: 'calibri';
+    font-family:'Times New Roman', Times, serif;
     color: black;
 }
 
@@ -170,21 +169,21 @@ table {
 
 td.description,
 th.description {
-    width: 30mm;
-    max-width: 30mm;
+    width: 70mm;
+    max-width: 70mm;
 }
 
 td.quantity,
 th.quantity {
-    width: 30mm;
-    max-width: 30mm;
+    width: 70mm;
+    max-width: 70mm;
     word-break: break-all;
 }
 
 /* td.price,
 th.price {
-    width: 30mm;
-    max-width: 30mm;
+    width: 70mm;
+    max-width: 70mm;
     word-break: break-all;
 } */
 
@@ -194,8 +193,8 @@ th.price {
 }
 
 .ticket {
-    width: 30mm ;
-    max-width: 30mm;
+    width: 70mm ;
+    max-width: 70mm;
 }
 
 img {
@@ -211,7 +210,7 @@ img {
 }
 
 @page {
-    size:30mm;
+    size:70mm;
     margin: 1mm;
 }
 
