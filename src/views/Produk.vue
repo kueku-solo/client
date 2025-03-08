@@ -74,7 +74,7 @@
             </v-row>      
 
             <!-- foto -->
-            <v-row>
+            <!-- <v-row>
                 <div id="app" class="web-camera-container">
                     <div class="camera-button">
                         <button type="button" class="button is-rounded" :class="{ 'is-primary' : !isCameraOpen, 'is-danger' : isCameraOpen}" @click="toggleCamera">
@@ -107,7 +107,7 @@
                     </div>
 
                     </div>
-            </v-row>
+            </v-row> -->
             <!-- foto -->              
           </v-container>
           <br>

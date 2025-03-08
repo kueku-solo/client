@@ -1,47 +1,47 @@
 <template>
   <div class="overflow-auto"> 
         <div class="ticket">
-            <p class="centered">KUEKU SOLO
-                <br>Ruko Cendana No.GP19 (Sebelah Kiri RS Dr.Oen Solo Baru)
-                <br>instagram : kueku_solo</p>
+            <p class="centered">
+                KUEKU SOLO
+                <br>
+                instagram : kueku_solo
+            </p>
             <small>___________________________</small>
             <div>
-                <small>Tanggal : {{getDateFull}}</small>
+                <small>Tgl:{{getDateFull}}</small>
                 <br>
-                <small>Jam : {{transaksi.jam}}</small>
+                <small>Jam:{{transaksi.jam}}</small>
                 <br>
-                <small>Kasir : {{transaksi.kasirName}}</small>                
+                <small>Kasir:{{transaksi.kasirName}}</small>                
             </div>                  
             <small>___________________________</small>
 
             <div v-for="item in items" :key="item._id">
                 <small>- {{item.nama}}</small>
                 <br>
-                <small v-if="Number(item.qty) < 3">Rp {{ getRupiah(item.harga)  }} x {{item.qty}} = Rp {{getRupiah(item.harga * item.qty)}}</small>
-                <small v-if="Number(item.qty) >= 3">Rp {{ getRupiah(getHargaGrosir(item))  }} x {{item.qty}} = Rp {{getRupiah(getTotalHargaGrosir(item))}}</small>
+                <small v-if="Number(item.qty) < 3">Rp{{ getRupiah(item.harga)  }} x {{item.qty}} = Rp{{getRupiah(item.harga * item.qty)}}</small>
+                <small v-if="Number(item.qty) >= 3">Rp{{ getRupiah(getHargaGrosir(item))  }} x {{item.qty}} = Rp{{getRupiah(getTotalHargaGrosir(item))}}</small>
                 <br>
                 <p></p>
             </div> 
             <small>___________________________</small>
             <div>
-                <small>SubTotal: Rp {{getRupiah(transaksi.total + transaksi.diskon)}}</small>
+                <small>SubTotal:Rp{{getRupiah(transaksi.total + transaksi.diskon)}}</small>
                 <br>
-                <small>Diskon: Rp {{getRupiah(transaksi.diskon)}}</small>
+                <small>Diskon:Rp{{getRupiah(transaksi.diskon)}}</small>
                 <br>
-                <small>Total: Rp {{getRupiah(transaksi.total)}}</small>
+                <small>Total:Rp{{getRupiah(transaksi.total)}}</small>
                 <br>
-                <small>Bayar: Rp {{getRupiah(transaksi.bayar)}}</small>
+                <small>Bayar:Rp{{getRupiah(transaksi.bayar)}}</small>
                 <br>
-                <small>Pembayaran: {{transaksi.pembayaran}}</small>
-                <br>
-                <small>Kembali: Rp {{getRupiah(transaksi.kembali)}}</small>   
+                <small>Kembali:Rp{{getRupiah(transaksi.kembali)}}</small>   
                 <br>
                 <small>___________________________</small>                    
             </div>   
             <br>
             <div class="mt-3">
             <p class="centered">
-                TERIMAKASI TELAH BERBELANJA   
+                TERIMAKASIH TELAH BERBELANJA   
                 <br>
                 <br>
             </p>
@@ -156,8 +156,8 @@
 
 <style scoped>
 * {
-    font-size: 12px;
-    font-family: 'Times New Roman';
+    font-size: 15px;
+    font-family: 'calibri';
 }
 
 td,
@@ -170,21 +170,21 @@ table {
 
 td.description,
 th.description {
-    width: 58mm;
-    max-width: 58mm;
+    width: 30mm;
+    max-width: 30mm;
 }
 
 td.quantity,
 th.quantity {
-    width: 58mm;
-    max-width: 58mm;
+    width: 30mm;
+    max-width: 30mm;
     word-break: break-all;
 }
 
 /* td.price,
 th.price {
-    width: 58mm;
-    max-width: 58mm;
+    width: 30mm;
+    max-width: 30mm;
     word-break: break-all;
 } */
 
@@ -194,8 +194,8 @@ th.price {
 }
 
 .ticket {
-    width: 58mm;
-    max-width: 58mm;
+    width: 30mm ;
+    max-width: 30mm;
 }
 
 img {
@@ -211,13 +211,13 @@ img {
 }
 
 @page {
-    size:58mm;
-    margin: 0mm;
+    size:30mm;
+    margin: 1mm;
 }
 
 
 /* @page {
-    size: 58mm 100mm;
+    size: 40mm 100mm;
     margin: 0;
 }
 @media print {

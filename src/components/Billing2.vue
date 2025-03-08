@@ -1,51 +1,52 @@
 <template>
   <div class="overflow-auto"> 
         <div class="ticket">
-            <a>KUEKU SOLO
-                <br>Ruko Cendana No.GP19, Grogol, Sukoharjo
-                <br>instagram : kueku_solo</a>
+            <p class="centered">
+                KUEKU SOLO
+                <br>
+                instagram : kueku_solo
+            </p>
             <small>___________________________</small>
             <div>
-                <small>Tanggal : {{this.getTanggal(transaksi.createdAt)}}</small>
+                <small>Tgl:{{this.getTanggal(transaksi.createdAt)}}</small>
                 <br>
-                <small>Jam : {{transaksi.jam}}</small>
+                <small>Jam:{{transaksi.jam}}</small>
                 <br>
-                <small>Kasir : {{transaksi.kasir.username}}</small>                
+                <small>Kasir:{{transaksi.kasir.username}}</small>                
             </div>                  
             <small>___________________________</small>
 
             <div v-for="item in items" :key="item._id">
                 <small>- {{item.nama}}</small>
                 <br>
-                <small>Rp {{ getRupiah(item.harga)  }} x {{item.qty}} = Rp {{getRupiah(item.harga * item.qty)}}</small>
+                <small>Rp{{ getRupiah(item.harga)  }} x {{item.qty}}</small>
                 <br>
+                <small>= Rp{{getRupiah(item.harga * item.qty)}}</small>
                 <p></p>
             </div> 
             <small>___________________________</small>
             <div>
-                <small v-if="transaksi.diskon !== null">SubTotal: Rp {{getRupiah(transaksi.totalHarga + transaksi.diskon)}}</small>
-                <small v-if="transaksi.diskon === null">SubTotal: Rp {{getRupiah(transaksi.totalHarga)}}</small>
+                <small v-if="transaksi.diskon !== null">SubTotal:Rp{{getRupiah(transaksi.totalHarga + transaksi.diskon)}}</small>
+                <small v-if="transaksi.diskon === null">SubTotal:Rp{{getRupiah(transaksi.totalHarga)}}</small>
                 <br>
-                <small v-if="transaksi.diskon !== null">Diskon: Rp {{getRupiah(transaksi.diskon)}}</small>
-                <small v-if="transaksi.diskon === null">Diskon: -</small>
+                <small v-if="transaksi.diskon !== null">Diskon:Rp{{getRupiah(transaksi.diskon)}}</small>
+                <small v-if="transaksi.diskon === null">Diskon:-</small>
                 <br>
-                <small>Total: Rp {{getRupiah(transaksi.totalHarga)}}</small>
+                <small>Total:Rp{{getRupiah(transaksi.totalHarga)}}</small>
                 <br>
-                <small>Bayar: Rp {{getRupiah(transaksi.bayar)}}</small>                
+                <small>Bayar:Rp{{getRupiah(transaksi.bayar)}}</small>                       
                 <br>
-                <small>Pembayaran: {{transaksi.pembayaran}}</small>        
-                <br>
-                <small>Kembali: Rp {{getRupiah(Number(transaksi.bayar) - Number(transaksi.totalHarga))}}</small>   
+                <small>Kembali:Rp{{getRupiah(Number(transaksi.bayar) - Number(transaksi.totalHarga))}}</small>   
                 <br>
                 <small>___________________________</small>
             </div>   
             <br>
             <div class="mt-3">
-            <a>              
-                TERIMAKASI TELAH BERBELANJA   
+            <p class="centered">              
+                TERIMAKASIH TELAH BERBELANJA   
                 <br>
                 <br>
-            </a>
+            </p>
             </div>
         </div>
         <!-- <b-button @click.prevent="printOke()" v-if="show">Print</b-button>  -->
@@ -150,7 +151,7 @@
 <style scoped>
 * {
     font-size: 15px;
-    font-family: 'arial';
+    font-family: 'calibri';
 }
 
 td,
@@ -163,21 +164,21 @@ table {
 
 td.description,
 th.description {
-    width: 58mm;
-    max-width: 58mm;
+    width: 30mm;
+    max-width: 30mm;
 }
 
 td.quantity,
 th.quantity {
-    width: 58mm;
-    max-width: 58mm;
+    width: 30mm;
+    max-width: 30mm;
     word-break: break-all;
 }
 
 /* td.price,
 th.price {
-    width: 58mm;
-    max-width: 58mm;
+    width: 30mm;
+    max-width: 30mm;
     word-break: break-all;
 } */
 
@@ -187,8 +188,8 @@ th.price {
 }
 
 .ticket {
-    width: 58mm;
-    max-width: 58mm;
+    width: 30mm ;
+    max-width: 30mm;
 }
 
 img {
@@ -204,13 +205,13 @@ img {
 }
 
 @page {
-    size:58mm;
+    size:30mm;
     margin: 1mm;
 }
 
 
 /* @page {
-    size: 58mm 100mm;
+    size: 40mm 100mm;
     margin: 0;
 }
 @media print {
