@@ -152,7 +152,6 @@
 * {
     font-size: 15px;
     font-family: 'calibri';
-    font-weight: bold;
     color: black;
 }
 
