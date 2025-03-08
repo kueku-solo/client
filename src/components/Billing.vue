@@ -1,20 +1,20 @@
 <template>
   <div class="overflow-auto"> 
-        <div class="ticket">
-            <p class="centered">
-                KUEKU SOLO
-                <br>
-                instagram : kueku_solo
-            </p>
-            <small>___________________________</small>
+            <div class="ticket">
+                <p class="centered">
+                    KUEKU SOLO
+                    <br>
+                    instagram : kueku_solo
+                </p>
             <div>
                 <small>Tgl:{{getDateFull}}</small>
                 <br>
                 <small>Jam:{{transaksi.jam}}</small>
                 <br>
-                <small>Kasir:{{transaksi.kasirName}}</small>                
+                <small>Kasir:{{transaksi.kasirName}}</small>    
+                <br>            
+                <small>___________________________</small>
             </div>                  
-            <small>___________________________</small>
 
             <div v-for="item in items" :key="item._id">
                 <small>- {{item.nama}}</small>
@@ -24,7 +24,9 @@
                 <br>
                 <p></p>
             </div> 
-            <small>___________________________</small>
+            <div>
+                <small>___________________________</small>
+            </div>
             <div>
                 <small>SubTotal:Rp{{getRupiah(transaksi.total + transaksi.diskon)}}</small>
                 <br>
@@ -34,17 +36,14 @@
                 <br>
                 <small>Bayar:Rp{{getRupiah(transaksi.bayar)}}</small>
                 <br>
-                <small>Kembali:Rp{{getRupiah(transaksi.kembali)}}</small>   
-                <br>
-                <small>___________________________</small>                    
+                <small>Kembali:Rp{{getRupiah(transaksi.kembali)}}</small>                    
             </div>   
-            <br>
             <div class="mt-3">
-            <p class="centered">
-                TERIMAKASIH TELAH BERBELANJA   
-                <br>
-                <br>
-            </p>
+                <p class="centered">
+                    TERIMAKASIH TELAH BERBELANJA   
+                    <br>
+                    <br>
+                </p>
             </div>
         </div>
         <!-- <b-button @click.prevent="printOke()" v-if="show">Print</b-button>  -->
@@ -157,7 +156,8 @@
 <style scoped>
 * {
     font-size: 15px;
-    font-family: 'calibri';
+    font-family: 'arial';
+    font-weight: bold;
 }
 
 td,

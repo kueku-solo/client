@@ -6,17 +6,17 @@
                 <br>
                 instagram : kueku_solo
             </p>
-            <small>___________________________</small>
             <div>
                 <small>Tgl:{{this.getTanggal(transaksi.createdAt)}}</small>
                 <br>
                 <small>Jam:{{transaksi.jam}}</small>
                 <br>
-                <small>Kasir:{{transaksi.kasir.username}}</small>                
+                <small>Kasir:{{transaksi.kasir.username}}</small>
+                <br>
+                <small>_____________________________</small>
             </div>                  
-            <small>___________________________</small>
 
-            <div v-for="item in items" :key="item._id">
+            <div v-for="item in items" :key="item._id">                
                 <small>- {{item.nama}}</small>
                 <br>
                 <small>Rp{{ getRupiah(item.harga)  }} x {{item.qty}}</small>
@@ -24,8 +24,10 @@
                 <small>= Rp{{getRupiah(item.harga * item.qty)}}</small>
                 <p></p>
             </div> 
-            <small>___________________________</small>
             <div>
+                <small>_____________________________</small>
+            </div>
+            <div>             
                 <small v-if="transaksi.diskon !== null">SubTotal:Rp{{getRupiah(transaksi.totalHarga + transaksi.diskon)}}</small>
                 <small v-if="transaksi.diskon === null">SubTotal:Rp{{getRupiah(transaksi.totalHarga)}}</small>
                 <br>
@@ -36,17 +38,15 @@
                 <br>
                 <small>Bayar:Rp{{getRupiah(transaksi.bayar)}}</small>                       
                 <br>
-                <small>Kembali:Rp{{getRupiah(Number(transaksi.bayar) - Number(transaksi.totalHarga))}}</small>   
-                <br>
-                <small>___________________________</small>
+                <small>Kembali:Rp{{getRupiah(Number(transaksi.bayar) - Number(transaksi.totalHarga))}}</small>                   
             </div>   
-            <br>
+
             <div class="mt-3">
-            <p class="centered">              
-                TERIMAKASIH TELAH BERBELANJA   
-                <br>
-                <br>
-            </p>
+                <p class="centered">           
+                    TERIMAKASIH TELAH BERBELANJA   
+                    <br>
+                    <br>
+                </p>
             </div>
         </div>
         <!-- <b-button @click.prevent="printOke()" v-if="show">Print</b-button>  -->
@@ -152,6 +152,7 @@
 * {
     font-size: 15px;
     font-family: 'calibri';
+    font-weight: bold;
 }
 
 td,
