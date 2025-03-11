@@ -20,7 +20,7 @@
 
                     <template v-slot:item.actions="{ item }">
                         <a @click="showItem(item.listItem)">
-                            <v-icon color="green" v-b-popover.hover.top="'All Item'" dense>mdi-basket-outline</v-icon>
+                            <v-icon color="green" dense>mdi-basket-outline</v-icon>
                         </a> 
                     </template>      
 

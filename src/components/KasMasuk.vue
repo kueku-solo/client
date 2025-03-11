@@ -242,7 +242,7 @@
         },  
     },
     created(){
-        console.log(this.kasMasuk)
+
     }
   }
 </script>

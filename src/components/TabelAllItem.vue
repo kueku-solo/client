@@ -20,9 +20,9 @@
         :loading="loading"
         hide-default-footer
     >
-        <template v-slot:item.image="{ item }">
+        <!-- <template v-slot:item.image="{ item }">
           <img :src="item.image" width="100" height="50"/>
-        </template>
+        </template> -->
 
         <template v-slot:item.harga="{ item }">
           <p>Rp {{getRupiah( item.harga)}}</p>
@@ -59,9 +59,8 @@
       return {
         perPage: 20,
         currentPage: 1,
-        fields: ['gambar', 'Nama', 'Stok', 'Harga', 'Action'], 
+        fields: ['Nama', 'Stok', 'Harga', 'Action'], 
         headers:[
-            { text: 'Image', value: 'image'},
             { text: 'Nama', value: 'nama' },
             { text: 'Stok', value: 'stok' },
             { text: 'Harga', value: 'harga' },

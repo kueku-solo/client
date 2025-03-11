@@ -18,7 +18,6 @@ const mutations = {
 }
 const actions = {
   fetchAction(context,payload,limit) {
-    console.log('masuk')
       context.commit('fillLoading2',true)
       context.commit('fillData2',[])
       axios({

@@ -122,7 +122,6 @@
             }
         },
         formatRupiahEsc(angka){
-            console.log(angka)
             let al = "";
             if(angka=="" || angka==null || angka=="null" || angka==undefined){
                 al = "";

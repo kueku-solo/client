@@ -157,7 +157,7 @@
     </v-dialog>      
     <!-- form edit produk -->   
 
-    <!-- form Edit Nama Produk -->
+    <!-- form Edit Stok Produk -->
     <v-dialog
     v-model="dialogNama"
     width="1000"
@@ -212,66 +212,7 @@
       </v-card>
       </b-overlay>
     </v-dialog>       
-    <!-- form Edit Nama Produk -->  
-
-    <!-- form edit kode barang -->
-    <v-dialog
-    v-model="dialog2"
-    width="1000"
-    >      
-      <b-overlay :show="loading2" rounded="sm">    
-      <v-card >
-        <v-card-title class="text-h5 grey lighten-2 mb-4">
-          Edit Barcode
-        </v-card-title>
-        <v-card-text>
-          <v-container>
-            <v-row>
-                <v-col cols="12" md="10">
-                    <v-text-field
-                        v-model="kodeLama"
-                        label="Kode Lama"    
-                        outlined                        
-                        clearable
-                        disabled
-                    ></v-text-field>      
-                </v-col>
-            </v-row>            
-            <v-row>
-                <v-col cols="12" md="10">
-                    <v-text-field
-                        v-model="kodeItem"
-                        label="Kode Baru"    
-                        outlined                        
-                        clearable
-                        v-on:keyup.enter="editBarcode()"
-                    ></v-text-field>      
-                </v-col>
-            </v-row>         
-          </v-container>
-          <small>*klik kode baru lalu scan barcode baru</small>
-        </v-card-text>
-        <v-card-actions>
-          <v-spacer></v-spacer>
-          <v-btn
-            color="blue darken-1"
-            text
-            @click="dialog2 = false ; kodeItem = ''"
-          >
-            Batal
-          </v-btn>
-          <v-btn
-            color="blue darken-1"
-            text
-            @click="editBarcode()"
-          >
-            Edit
-          </v-btn>
-        </v-card-actions>
-      </v-card>
-      </b-overlay>
-    </v-dialog>       
-    <!-- form edit kode barang -->   
+    <!-- form Edit Stok Produk -->  
   </div>
 
 </template>
@@ -350,7 +291,6 @@
               }
             })      
                   .then(({data})=>{       
-                    console.log(data.results)
                     this.allData = data.results       
                     this.fillLoading(false)
                   })
@@ -484,7 +424,6 @@
 
         },        
         editItem(){
-
                 if(!this.loading2){             
                   this.loading2 = true
                     axios({
@@ -495,9 +434,9 @@
                         },
                         data:{
                             nama: this.nama,
-                            hargaEcer:this.formatRupiahEsc(this.hargaEcer),
-                            hargaGrosir:this.formatRupiahEsc(this.hargaGrosir),
-                            hargaModal:this.formatRupiahEsc(this.hargaModal)                       
+                            harga:this.formatRupiahEsc(this.harga),
+                            kodeBarang:this.kodeBarang,
+                            stok:this.stok                      
                         }
                         })
                         .then(({data}) =>{                      
@@ -554,49 +493,6 @@
                     })         
         },        
 
-        // edit kode barang
-        editKode(item){
-          this.dialog2 = true
-          this.kodeLama = item.kodeBarang
-          this.tempId = item._id
-        } ,       
-        editBarcode(){          
-                this.loading2 = true  
-                axios({
-                    url: `https://kueku-server-15ecaf79af24.herokuapp.com/item/editkode/${this.tempId}`,
-                    method: 'put',
-                    headers:{
-                        token : localStorage.getItem('token')
-                    },
-                    data:{
-                        kodeBarang: this.kodeItem,                    
-                    }
-                    })
-                    .then(({data}) =>{
-                        this.loading2 = false                    
-                        this.dialog2 = false
-                        this.kodeLama = ''
-                        this.kodeItem = ''
-                        this.editOneData(data)       
-                    })
-                    .catch(err=>{
-                            this.loading2 = false                  
-                            if(err.response.status === 401){
-                              Swal.fire({
-                                icon: 'error',
-                                title: 'kode sudah terdaftar !',
-                                text: err.errors,
-                              })
-                            }else{
-                              Swal.fire({
-                                icon: 'error',
-                                title: 'gagal !',
-                                text: err.errors,
-                                }) 
-                            }
-                         
-                    }) 
-        },
         deleteItem(id){
           Swal.fire({
               title: 'Apakah anda yakin ?',

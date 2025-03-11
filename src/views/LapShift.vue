@@ -300,7 +300,6 @@
             }
         },
         showKas(data){
-            console.log(data)
             this.dialog = true
             this.dataKeluar = data.kasKeluar
             this.dataMasuk = data.kasMasuk

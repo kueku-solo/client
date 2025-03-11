@@ -62,8 +62,6 @@
   export default {
     data() {
       return {
-        src: '',
-
         // shift
         dialog: false
       }
@@ -88,9 +86,6 @@
         }             
     },        
     watch: {
-        src: function(){
-            console.log(this.src)
-        },
         data: function(){
             if(this.data === null){
                 this.dialog = true
