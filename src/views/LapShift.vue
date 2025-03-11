@@ -178,9 +178,7 @@
 </template>
 
 <script>
-  import { mapActions, mapGetters } from 'vuex'
   import axios from 'axios'
-  import Swal from 'sweetalert2'
   import Billing from '../components/Billing2.vue'
 
 
@@ -226,18 +224,12 @@
     watch: {
 
     },
-    computed:{
-        ...mapGetters({
-
-        }),        
+    computed:{     
         getRole(){
           return this.$store.state.userRole
         },                  
     },    
     methods: { 
-        ...mapActions({
-
-        }),    
         fetchAllShift(){
             this.loading = true
             this.allShift = []
@@ -304,9 +296,6 @@
             this.dataKeluar = data.kasKeluar
             this.dataMasuk = data.kasMasuk
         },         
-    },
-    watch:{
-
     },
         created(){
             this.fetchAllShift()
