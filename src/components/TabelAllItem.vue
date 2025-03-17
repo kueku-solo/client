@@ -153,6 +153,7 @@
               id: data._id,
               nama: data.nama,
               kodeBarang: data.kodeBarang,
+              disc:0,
               qty: 1,
               stok:data.stok,
               harga: data.harga,
@@ -163,50 +164,12 @@
         },           
     },
     watch:{
-    qty: function(){
-        if(this.qty >= 3){
-            this.harga = this.getRupiah(this.qty * this.hargaGrosir)
-            
-        }else{
-            this.harga = this.getRupiah(this.qty * this.hargaEcer)
-        }
-    },
     currentPage: function(){
           if(this.src === ''){
             this.fetchItem(this.currentPage,this.perPage)
           }else{
             this.search()
           }
-    },
-    hargaEcer: function(){
-        if(this.hargaEcer){
-            var number_string = this.hargaEcer.replace(/[^,\d]/g, '').toString()
-            var sisa 	= number_string.length % 3,
-                rupiah 	= number_string.substr(0, sisa),
-                ribuan 	= number_string.substr(sisa).match(/\d{3}/g);
-                    
-            if (ribuan) {
-                this.hargaEcer = sisa ? '.' : '';
-                rupiah += this.hargaEcer + ribuan.join('.');
-            }            
-
-            this.hargaEcer = rupiah
-        }
-    },
-    hargaGrosir: function(){
-        if(this.hargaGrosir){
-            var number_string = this.hargaGrosir.replace(/[^,\d]/g, '').toString()
-            var sisa 	= number_string.length % 3,
-                rupiah 	= number_string.substr(0, sisa),
-                ribuan 	= number_string.substr(sisa).match(/\d{3}/g);
-                    
-            if (ribuan) {
-                this.hargaGrosir = sisa ? '.' : '';
-                rupiah += this.hargaGrosir + ribuan.join('.');
-            }            
-
-            this.hargaGrosir = rupiah
-        }
     },
     shift: function(){
         if(this.getRole === 'kasir'){

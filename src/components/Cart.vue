@@ -19,11 +19,19 @@
         <template #cell(Qty)="row">
           <input type="number" min="0" v-model="row.item.qty"   @keyup.alt.enter="bayar()"/>
         </template>  
+        <template #cell(Disc%)="row">
+            <!-- <input type="number" min="0" max="100" v-model="row.item.disc"   @keyup.alt.enter="bayar()"/> -->
+            <v-text-field
+                        v-model="row.item.disc"
+                        prefix="%"
+                        @keyup.alt.enter="bayar()"
+                    ></v-text-field>
+        </template>  
         <template #cell(Harga)="row">
           <p>Rp {{ getRupiah(row.item.harga) }}</p>
         </template>      
         <template #cell(Total)="row">
-          <p>Rp {{ getRupiah(row.item.harga * row.item.qty) }}</p>
+          <p>Rp {{ getTotalHargaItem(row.item)}}</p>
         </template>             
         <template #cell(Delete)="row">
             <a @click="deleteItem(row.index)">
@@ -49,6 +57,19 @@
                     ></v-text-field>
             </td>
         </tr>
+        <tr>
+            <td>
+                <div class="cell-with-input">
+                    Potongan Harga :   
+                </div>
+            </td>
+            <td>               
+                    <v-text-field
+                        v-model="potHarga"
+                        prefix="Rp"
+                    ></v-text-field>
+            </td>
+        </tr>        
         <tr class="text-bold">
             <td>Grand Total : Rp {{ getRupiah(grandTotal) }}</td>
         </tr>
@@ -196,12 +217,13 @@
 
         data(){
         return {
-                fields:['Item','Qty','Harga','Total','Delete'],
+                fields:['Item','Qty','Disc%','Harga','Total','Delete'],
                 discountRate: 0,
                 dialog: false,
                 pembayaran: ['Tunai', 'Bank'],
                 uang: null,
                 diskon:0,
+                potHarga:0,
                 transaksi:{
                     total: 0,
                     bayar: 0,
@@ -256,6 +278,7 @@
                     this.addAntrian(this.transaksi)
             },
             tambahTransaksi(){                
+                    this.transaksi.subTotal = this.subTotal
                     this.transaksi.diskon = this.formatRupiahEsc(this.diskon)
                     this.transaksi.total = this.grandTotal
                     this.transaksi.bayar = this.formatRupiahEsc(this.uang)
@@ -304,6 +327,14 @@
                 }else{
                     return '-'
                 }
+            },
+            getTotalHargaItem(item){
+                console.log(item)
+                let tempTotal = item.harga * item.qty
+
+                let rumus = tempTotal - (tempTotal*item.disc/100)
+
+                return this.getRupiah(rumus)
             }                 
         },
         computed: {
@@ -326,8 +357,11 @@
             },          
             subTotal: function() {
                 var total = this.items.reduce(function(accumulator, item) {
-                        return accumulator + (item.harga * item.qty);
-                    
+                    let tempTotal = item.harga * item.qty
+
+                    let rumus = tempTotal - (tempTotal*item.disc/100)
+
+                        return accumulator + rumus;                    
                 }, 0)
                 return total;
             },
@@ -336,7 +370,7 @@
                 return total;
             },
             grandTotal: function() {
-                var total = this.subTotal - this.discountTotal
+                var total = this.subTotal - this.discountTotal - this.formatRupiahEsc(this.potHarga)
                 return total;
             },
             kembalian: function(){
@@ -361,22 +395,22 @@
                     this.uang = rupiah
                 }
             },
-            // diskon: function(){
-            //     if(this.diskon){
-            //         var number_string = this.diskon.replace(/[^,\d]/g, '').toString()
-            //         var sisa 	= number_string.length % 3,
-            //             rupiah 	= number_string.substr(0, sisa),
-            //             ribuan 	= number_string.substr(sisa).match(/\d{3}/g);
+            potHarga: function(){
+                if(this.diskon){
+                    var number_string = this.diskon.replace(/[^,\d]/g, '').toString()
+                    var sisa 	= number_string.length % 3,
+                        rupiah 	= number_string.substr(0, sisa),
+                        ribuan 	= number_string.substr(sisa).match(/\d{3}/g);
                             
-            //         if (ribuan) {
-            //             this.diskon = sisa ? '.' : '';
-            //             rupiah += this.diskon + ribuan.join('.');
-            //         }            
+                    if (ribuan) {
+                        this.diskon = sisa ? '.' : '';
+                        rupiah += this.diskon + ribuan.join('.');
+                    }            
                     
 
-            //         this.diskon = rupiah
-            //     }
-            // }
+                    this.diskon = rupiah
+                }
+            }
         }
     }
 

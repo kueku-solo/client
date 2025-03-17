@@ -1,11 +1,14 @@
 <template>
   <div class="overflow-auto"> 
         <div class="ticket">
-            <p class="centered">
-                KUEKU SOLO
-                <br>
-                instagram : kueku_solo
-            </p>
+                <p style="font-weight: bold;" class="centered">
+                    KUEKU SOLO
+                </p>            
+                <p class="centered">
+                    instagram : kueku_solo
+                    <br>
+                    <small>_____________________________</small>
+                </p>
             <div>
                 <small>{{this.getTanggal(transaksi.createdAt)}}</small>
                 <br>
@@ -19,19 +22,22 @@
             <div v-for="item in items" :key="item._id">                
                 <small style="font-weight: bold;">- {{item.nama}}</small>
                 <br>
-                <small>{{getRupiah(item.harga)}} x {{item.qty}} = Rp{{getRupiah(item.harga * item.qty)}}</small>
+                <small v-if="item.disc === undefined || item.disc <= 0">{{getRupiah(item.harga)}} x {{item.qty}} = Rp{{getRupiah(item.harga * item.qty)}}</small>
+                <small v-if="item.disc !== undefined && item.disc > 0">{{getRupiah(item.harga)}} x {{item.qty}} = Rp{{getTotalHargaItem(item)}}</small>
+                <br v-if="item.disc !== undefined && item.disc > 0">
+                <small v-if="item.disc !== undefined && item.disc > 0">Diskon {{ item.disc }}%</small>              
+                <br v-if="item.disc !== undefined && item.disc > 0">
                 <p></p>
             </div> 
             <div>
                 <small>_____________________________</small>
             </div>
             <div>             
-                <small v-if="transaksi.diskon !== null">SubTotal:Rp{{getRupiah(transaksi.totalHarga / (transaksi.diskon/100))}}</small>
-                <small v-if="transaksi.diskon === null">SubTotal:Rp{{getRupiah(transaksi.totalHarga)}}</small>
+                <small v-if="transaksi.subTotal">SubTotal:Rp{{getRupiah(transaksi.subTotal)}}</small>
+                <small v-if="transaksi.subTotal === undefined">SubTotal:Rp{{getRupiah(transaksi.totalHarga)}}</small>
                 <br>
-                <small v-if="transaksi.diskon !== null">Diskon:{{transaksi.diskon}}%</small>
-                <small v-if="transaksi.diskon === null">Diskon:-</small>
-                <br>
+                <small v-if="transaksi.diskon !== undefined && transaksi.diskon > 0">Diskon:{{transaksi.diskon}}%</small>
+                <br v-if="transaksi.diskon !== undefined && transaksi.diskon > 0">
                 <small style="font-weight: bold;">Total:Rp{{getRupiah(transaksi.totalHarga)}}</small>
                 <br>
                 <small>Bayar:Rp{{getRupiah(transaksi.bayar)}}</small>                       
@@ -41,7 +47,7 @@
 
             <div class="mt-3">
                 <p class="centered">           
-                    TERIMAKASIH   
+                    TERIMA KASIH   
                     <br>
                     <br>
                 </p>
@@ -55,6 +61,7 @@
 
 <script>
     import { mapGetters,mapActions,mapMutations } from 'vuex'
+import transaksi from '../store/module/transaksi'
 
   export default {
     data() {
@@ -129,7 +136,15 @@
                 al = Math.abs(angka.replace(/[^,\d]/g, '').toString());
             }
             return al;
-        }      ,                
+        }      , 
+        getTotalHargaItem(item){
+                console.log(item)
+                let tempTotal = item.harga * item.qty
+
+                let rumus = tempTotal - (tempTotal*item.disc/100)
+
+                return this.getRupiah(rumus)
+        }                
     },
     watch:{
     show: function(){

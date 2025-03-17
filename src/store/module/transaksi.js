@@ -92,6 +92,7 @@ const actions = {
       let temp = {
         kodeBarang: element.kodeBarang,
         nama: element.nama,
+        disc:Number(element.disc),
         qty: Number(element.qty),
         harga: element.harga
       }
@@ -120,6 +121,7 @@ const actions = {
         data:{
             shift: payload.kasir.userId,
             listItem: tempItem,
+            subTotal: payload.subTotal,
             diskon:payload.diskon,
             totalHarga: payload.total,
             bayar: payload.bayar,
