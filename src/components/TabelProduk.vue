@@ -76,27 +76,38 @@
                 </v-col>
             </v-row>
             <v-row v-if="getRole === 'super'">
-                <v-col cols="6" md="6">                  
+                <v-col cols="12" md="3">                  
                     <v-text-field
-                    label="Harga"
+                    label="Harga Modal"
+                    v-model="modal"
+                    prefix="Rp"                
+                    v-on:keyup.enter="editItem()"                                         
+                    ></v-text-field>
+                </v-col>   
+                <v-col cols="12" md="3">                  
+                    <v-text-field
+                    label="Harga Jual"
                     v-model="harga"
                     prefix="Rp"                
-                    v-on:keyup.alt="editItem()"                                         
+                    v-on:keyup.enter="editItem()"                                         
                     ></v-text-field>
                 </v-col>    
-                <v-col cols="6" md="6">
+                <v-col cols="12" md="2">                  
+                    Laba = {{ formatRupiahEsc(harga) - formatRupiahEsc(modal) }}
+                </v-col>  
+                <v-col cols="12" md="4">
                     <v-text-field
                         v-model="kodeBarang"
                         label="Kode Barang"    
                         outlined                        
                         clearable
-                        v-on:keyup.alt="editItem()"
+                        v-on:keyup.enter="editItem()"
                     ></v-text-field>      
                 </v-col>                                   
             </v-row>      
 
             <!-- foto -->
-            <v-row>
+            <!-- <v-row>
                 <div id="app" class="web-camera-container">
                     <div class="camera-button">
                         <button type="button" class="button is-rounded" :class="{ 'is-primary' : !isCameraOpen, 'is-danger' : isCameraOpen}" @click="toggleCamera">
@@ -129,7 +140,7 @@
                     </div>
 
                     </div>
-            </v-row>
+            </v-row> -->
             <!-- foto -->              
           </v-container>
           <br>
@@ -245,14 +256,15 @@
         dialog: false,
         nama: '',
         stok:0,
+        modal:null,
         harga:null,
         kodeBarang: '',
         // foto
-        isCameraOpen: false,
-        isPhotoTaken: false,
-        isShotPhoto: false,
-        isLoading: false,
-        link: '#',
+        // isCameraOpen: false,
+        // isPhotoTaken: false,
+        // isShotPhoto: false,
+        // isLoading: false,
+        // link: '#',
 
         // edit nama
         dialogNama: false,
@@ -354,75 +366,76 @@
         formEdit(data){
             this.tempId = data._id
             this.nama = data.nama
+            this.modal = this.getRupiah(data.modal)
             this.harga = this.getRupiah(data.harga)
             this.kodeBarang = data.kodeBarang
             this.stok = this.getRupiah(data.stok)
             this.dialog = true
         },
         // foto
-        toggleCamera() {
-            this.link = '#'
-            if(this.isCameraOpen) {
-                this.isCameraOpen = false;
-                this.isPhotoTaken = false;
-                this.isShotPhoto = false;
-                this.stopCameraStream();
-            } else {
-                this.isCameraOpen = true;
-                this.createCameraElement();
-            }
-        },
+        // toggleCamera() {
+        //     this.link = '#'
+        //     if(this.isCameraOpen) {
+        //         this.isCameraOpen = false;
+        //         this.isPhotoTaken = false;
+        //         this.isShotPhoto = false;
+        //         this.stopCameraStream();
+        //     } else {
+        //         this.isCameraOpen = true;
+        //         this.createCameraElement();
+        //     }
+        // },
     
-        createCameraElement() {
-            this.isLoading = true;
+        // createCameraElement() {
+        //     this.isLoading = true;
             
-            const constraints = (window.constraints = {
-                        audio: false,
-                        video: true
-                    });
+        //     const constraints = (window.constraints = {
+        //                 audio: false,
+        //                 video: true
+        //             });
 
 
-                    navigator.mediaDevices
-                        .getUserMedia(constraints)
-                        .then(stream => {
-                this.isLoading = false;
-                            this.$refs.camera.srcObject = stream;
-                        })
-                        .catch(error => {
-                this.isLoading = false;
-                            alert("May the browser didn't support or there is some errors.");
-                        });
-            },
+        //             navigator.mediaDevices
+        //                 .getUserMedia(constraints)
+        //                 .then(stream => {
+        //         this.isLoading = false;
+        //                     this.$refs.camera.srcObject = stream;
+        //                 })
+        //                 .catch(error => {
+        //         this.isLoading = false;
+        //                     alert("May the browser didn't support or there is some errors.");
+        //                 });
+        //     },
             
-        stopCameraStream() {
-            let tracks = this.$refs.camera.srcObject.getTracks();
+        // stopCameraStream() {
+        //     let tracks = this.$refs.camera.srcObject.getTracks();
 
-                    tracks.forEach(track => {
-                        track.stop();
-                    });
-            },
+        //             tracks.forEach(track => {
+        //                 track.stop();
+        //             });
+        //     },
     
-        takePhoto() {
-            if(!this.isPhotoTaken) {
-                this.isShotPhoto = true;
+        // takePhoto() {
+        //     if(!this.isPhotoTaken) {
+        //         this.isShotPhoto = true;
 
-                const FLASH_TIMEOUT = 50;
+        //         const FLASH_TIMEOUT = 50;
 
-                setTimeout(() => {
-                this.isShotPhoto = false;
-                }, FLASH_TIMEOUT);
-            }
+        //         setTimeout(() => {
+        //         this.isShotPhoto = false;
+        //         }, FLASH_TIMEOUT);
+        //     }
             
-            this.isPhotoTaken = !this.isPhotoTaken;
+        //     this.isPhotoTaken = !this.isPhotoTaken;
             
-            const context = this.$refs.canvas.getContext('2d');
-            context.drawImage(this.$refs.camera, 0, 0, 450, 337.5);
+        //     const context = this.$refs.canvas.getContext('2d');
+        //     context.drawImage(this.$refs.camera, 0, 0, 450, 337.5);
             
-            const canvas = document.getElementById("photoTaken").toDataURL()
+        //     const canvas = document.getElementById("photoTaken").toDataURL()
            
-            this.link = canvas
+        //     this.link = canvas
 
-        },        
+        // },        
         editItem(){
                 if(!this.loading2){             
                   this.loading2 = true
@@ -434,6 +447,7 @@
                         },
                         data:{
                             nama: this.nama,
+                            modal: this.formatRupiahEsc(this.modal),
                             harga:this.formatRupiahEsc(this.harga),
                             kodeBarang:this.kodeBarang,
                             stok:this.stok                      
@@ -530,103 +544,36 @@
             this.allData = []
           }
         },
-        hargaEcer: function(){
-            if(this.hargaEcer){
-                var number_string = this.hargaEcer.replace(/[^,\d]/g, '').toString()
+        harga: function(){
+            if(this.harga){
+                var number_string = this.harga.replace(/[^,\d]/g, '').toString()
                 var sisa 	= number_string.length % 3,
                     rupiah 	= number_string.substr(0, sisa),
                     ribuan 	= number_string.substr(sisa).match(/\d{3}/g);
                         
                 if (ribuan) {
-                    this.hargaEcer = sisa ? '.' : '';
-                    rupiah += this.hargaEcer + ribuan.join('.');
+                    this.harga = sisa ? '.' : '';
+                    rupiah += this.harga + ribuan.join('.');
                 }            
     
-                this.hargaEcer = rupiah
+                this.harga = rupiah
             }
         },
-        hargaGrosir: function(){
-            if(this.hargaGrosir){
-                var number_string = this.hargaGrosir.replace(/[^,\d]/g, '').toString()
+        modal: function(){
+            if(this.modal){
+                var number_string = this.modal.replace(/[^,\d]/g, '').toString()
                 var sisa 	= number_string.length % 3,
                     rupiah 	= number_string.substr(0, sisa),
                     ribuan 	= number_string.substr(sisa).match(/\d{3}/g);
                         
                 if (ribuan) {
-                    this.hargaGrosir = sisa ? '.' : '';
-                    rupiah += this.hargaGrosir + ribuan.join('.');
+                    this.modal = sisa ? '.' : '';
+                    rupiah += this.modal + ribuan.join('.');
                 }            
     
-                this.hargaGrosir = rupiah
+                this.modal = rupiah
             }
-        },
-        hargaModal: function(){
-            if(this.hargaModal){
-                var number_string = this.hargaModal.replace(/[^,\d]/g, '').toString()
-                var sisa 	= number_string.length % 3,
-                    rupiah 	= number_string.substr(0, sisa),
-                    ribuan 	= number_string.substr(sisa).match(/\d{3}/g);
-                        
-                if (ribuan) {
-                    this.hargaModal = sisa ? '.' : '';
-                    rupiah += this.hargaModal + ribuan.join('.');
-                }            
-    
-                this.hargaModal = rupiah
-            }            
-            if(this.rumus === '10/5'){
-              let ecer = 10/100
-              let grosir = 5/100              
-              let potEcer = this.formatRupiahEsc(this.hargaModal) * ecer
-              let potGrosir = this.formatRupiahEsc(this.hargaModal) * grosir              
-              this.tempHargaEcer = this.formatRupiahEsc(this.hargaModal) + potEcer
-              this.tempHargaGrosir = this.formatRupiahEsc(this.hargaModal) + potGrosir              
-            }else if(this.rumus === '8/3'){
-              let ecer2 = 8/100
-              let grosir2 = 3/100              
-              let potEcer2 = this.formatRupiahEsc(this.hargaModal) * ecer2
-              let potGrosir2 = this.formatRupiahEsc(this.hargaModal) * grosir2 
-              this.tempHargaEcer = this.formatRupiahEsc(this.hargaModal) + potEcer2
-              this.tempHargaGrosir = this.formatRupiahEsc(this.hargaModal) + potGrosir2   
-            }else if(this.rumus === '200/150'){
-              let Ecer3 = 200/100
-              let Grosir3 = 150/100              
-              this.tempHargaEcer = this.formatRupiahEsc(this.hargaModal) * Ecer3
-              this.tempHargaGrosir = this.formatRupiahEsc(this.hargaModal) * Grosir3 
-            }else if(this.rumus === '150/120'){
-              let Ecer4 = 150/100
-              let Grosir4 = 120/100              
-              this.tempHargaEcer = this.formatRupiahEsc(this.hargaModal) * Ecer4
-              this.tempHargaGrosir = this.formatRupiahEsc(this.hargaModal) * Grosir4    
-            }
-        },
-        rumus: function(){
-            if(this.rumus === '10/5'){
-              let ecer = 10/100
-              let grosir = 5/100              
-              let potEcer = this.formatRupiahEsc(this.hargaModal) * ecer
-              let potGrosir = this.formatRupiahEsc(this.hargaModal) * grosir              
-              this.tempHargaEcer = this.formatRupiahEsc(this.hargaModal) + potEcer
-              this.tempHargaGrosir = this.formatRupiahEsc(this.hargaModal) + potGrosir              
-            }else if(this.rumus === '8/3'){
-              let ecer2 = 8/100
-              let grosir2 = 3/100              
-              let potEcer2 = this.formatRupiahEsc(this.hargaModal) * ecer2
-              let potGrosir2 = this.formatRupiahEsc(this.hargaModal) * grosir2 
-              this.tempHargaEcer = this.formatRupiahEsc(this.hargaModal) + potEcer2
-              this.tempHargaGrosir = this.formatRupiahEsc(this.hargaModal) + potGrosir2   
-            }else if(this.rumus === '200/150'){
-              let Ecer3 = 200/100
-              let Grosir3 = 150/100              
-              this.tempHargaEcer = this.formatRupiahEsc(this.hargaModal) * Ecer3
-              this.tempHargaGrosir = this.formatRupiahEsc(this.hargaModal) * Grosir3 
-            }else if(this.rumus === '150/120'){
-              let Ecer4 = 150/100
-              let Grosir4 = 120/100              
-              this.tempHargaEcer = this.formatRupiahEsc(this.hargaModal) * Ecer4
-              this.tempHargaGrosir = this.formatRupiahEsc(this.hargaModal) * Grosir4    
-            }
-        }                           
+        }                    
     },
     created(){
       this.search()

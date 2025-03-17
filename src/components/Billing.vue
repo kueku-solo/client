@@ -27,9 +27,9 @@
                 <small>___________________________</small>
             </div>
             <div>
-                <small>SubTotal:Rp{{getRupiah(transaksi.total + transaksi.diskon)}}</small>
+                <small>SubTotal:Rp{{getRupiah(transaksi.total/(transaksi.diskon/100))}}</small>
                 <br>
-                <small>Diskon:Rp{{getRupiah(transaksi.diskon)}}</small>
+                <small>Diskon:{{transaksi.diskon}}%</small>
                 <br>
                 <small style="font-weight: bold;">Total:Rp{{getRupiah(transaksi.total)}}</small>
                 <br>

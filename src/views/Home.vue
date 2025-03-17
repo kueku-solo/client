@@ -39,15 +39,6 @@
           style="position:fixed; top:0; left:0;">   
           <v-divider></v-divider>
           <v-list>
-            <!-- <v-list-item link @click="$router.push('/dashboard')" v-if="getRole === 'super' ">
-              <v-list-item-icon>
-                <v-icon>mdi-store</v-icon>
-              </v-list-item-icon>
-              <v-list-item-content>
-                <v-list-item-title>Dashboard</v-list-item-title>
-              </v-list-item-content>
-            </v-list-item> -->
-
             <v-list-item link @click="$router.push('/transaksi')" v-if="getRole === 'kasir'">
               <v-list-item-icon>
                 <v-icon>mdi-cash-multiple</v-icon>

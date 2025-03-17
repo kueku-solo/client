@@ -26,10 +26,10 @@
                 <small>_____________________________</small>
             </div>
             <div>             
-                <small v-if="transaksi.diskon !== null">SubTotal:Rp{{getRupiah(transaksi.totalHarga + transaksi.diskon)}}</small>
+                <small v-if="transaksi.diskon !== null">SubTotal:Rp{{getRupiah(transaksi.totalHarga / (transaksi.diskon/100))}}</small>
                 <small v-if="transaksi.diskon === null">SubTotal:Rp{{getRupiah(transaksi.totalHarga)}}</small>
                 <br>
-                <small v-if="transaksi.diskon !== null">Diskon:Rp{{getRupiah(transaksi.diskon)}}</small>
+                <small v-if="transaksi.diskon !== null">Diskon:{{transaksi.diskon}}%</small>
                 <small v-if="transaksi.diskon === null">Diskon:-</small>
                 <br>
                 <small style="font-weight: bold;">Total:Rp{{getRupiah(transaksi.totalHarga)}}</small>

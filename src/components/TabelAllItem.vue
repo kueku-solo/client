@@ -224,6 +224,8 @@
         }else{
           this.fetchItem(this.currentPage,this.perPage)       
         }
+
+        this.search()
     }
   }
 </script>

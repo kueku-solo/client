@@ -33,21 +33,24 @@
     </b-table>                
     <table>
         <tr>
-            <td>Subtotal</td>
+            <td>Subtotal : </td>
             <td>Rp {{getRupiah(subTotal) }}</td>
         </tr>
         <tr>
-            <td><div class="cell-with-input">Diskon</div></td>
-            <td>                    
+            <td>
+                <div class="cell-with-input">
+                    Discount :   
+                </div>
+            </td>
+            <td>               
                     <v-text-field
-                    v-model="diskon"
-                    prefix="Rp"
+                        v-model="diskon"
+                        prefix="%"
                     ></v-text-field>
             </td>
         </tr>
         <tr class="text-bold">
-            <td>Grand Total</td>
-            <td>Rp {{ getRupiah(grandTotal) }}</td>
+            <td>Grand Total : Rp {{ getRupiah(grandTotal) }}</td>
         </tr>
     </table>
     <v-btn
@@ -328,8 +331,8 @@
                 }, 0)
                 return total;
             },
-            discountTotal: function() {
-                var total = this.formatRupiahEsc(this.diskon)
+            discountTotal: function() {                
+                var total = this.subTotal * (Number(this.diskon)/100)                
                 return total;
             },
             grandTotal: function() {
@@ -358,22 +361,22 @@
                     this.uang = rupiah
                 }
             },
-            diskon: function(){
-                if(this.diskon){
-                    var number_string = this.diskon.replace(/[^,\d]/g, '').toString()
-                    var sisa 	= number_string.length % 3,
-                        rupiah 	= number_string.substr(0, sisa),
-                        ribuan 	= number_string.substr(sisa).match(/\d{3}/g);
+            // diskon: function(){
+            //     if(this.diskon){
+            //         var number_string = this.diskon.replace(/[^,\d]/g, '').toString()
+            //         var sisa 	= number_string.length % 3,
+            //             rupiah 	= number_string.substr(0, sisa),
+            //             ribuan 	= number_string.substr(sisa).match(/\d{3}/g);
                             
-                    if (ribuan) {
-                        this.diskon = sisa ? '.' : '';
-                        rupiah += this.diskon + ribuan.join('.');
-                    }            
+            //         if (ribuan) {
+            //             this.diskon = sisa ? '.' : '';
+            //             rupiah += this.diskon + ribuan.join('.');
+            //         }            
                     
 
-                    this.diskon = rupiah
-                }
-            }
+            //         this.diskon = rupiah
+            //     }
+            // }
         }
     }
 

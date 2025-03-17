@@ -158,11 +158,11 @@
         harga:null,
         kodeBarang: '',
             // foto
-            isCameraOpen: false,
-            isPhotoTaken: false,
-            isShotPhoto: false,
-            isLoading: false,
-            link: '#'
+            // isCameraOpen: false,
+            // isPhotoTaken: false,
+            // isShotPhoto: false,
+            // isLoading: false,
+            // link: '#'
       }
     },
     components: {
@@ -249,8 +249,7 @@
                         nama: this.nama,
                         stok:this.stok,
                         modal : this.formatRupiahEsc(this.modal),
-                        harga:this.formatRupiahEsc(this.harga),     
-                        image: this.link
+                        harga:this.formatRupiahEsc(this.harga)
                 }
                 if(this.kodeBarang !== ''){
                   temp.kodeBarang = this.kodeBarang
@@ -272,7 +271,6 @@
                         this.modal = null
                         this.harga = null
                         this.loading2 = false
-                        this.toggleCamera()
                         this.fetchItem(1,10)
                     })
                     .catch(err=>{
@@ -286,69 +284,69 @@
                     })         
         },
         // foto
-        toggleCamera() {
-            this.link = '#'
-            if(this.isCameraOpen) {
-                this.isCameraOpen = false;
-                this.isPhotoTaken = false;
-                this.isShotPhoto = false;
-                this.stopCameraStream();
-            } else {
-                this.isCameraOpen = true;
-                this.createCameraElement();
-            }
-        },
+    //     toggleCamera() {
+    //         this.link = '#'
+    //         if(this.isCameraOpen) {
+    //             this.isCameraOpen = false;
+    //             this.isPhotoTaken = false;
+    //             this.isShotPhoto = false;
+    //             this.stopCameraStream();
+    //         } else {
+    //             this.isCameraOpen = true;
+    //             this.createCameraElement();
+    //         }
+    //     },
     
-        createCameraElement() {
-            this.isLoading = true;
+    //     createCameraElement() {
+    //         this.isLoading = true;
             
-            const constraints = (window.constraints = {
-                        audio: false,
-                        video: true
-                    });
+    //         const constraints = (window.constraints = {
+    //                     audio: false,
+    //                     video: true
+    //                 });
 
 
-                    navigator.mediaDevices
-                        .getUserMedia(constraints)
-                        .then(stream => {
-                this.isLoading = false;
-                            this.$refs.camera.srcObject = stream;
-                        })
-                        .catch(error => {
-                this.isLoading = false;
-                            alert("May the browser didn't support or there is some errors.");
-                        });
-            },
+    //                 navigator.mediaDevices
+    //                     .getUserMedia(constraints)
+    //                     .then(stream => {
+    //             this.isLoading = false;
+    //                         this.$refs.camera.srcObject = stream;
+    //                     })
+    //                     .catch(error => {
+    //             this.isLoading = false;
+    //                         alert("May the browser didn't support or there is some errors.");
+    //                     });
+    //         },
             
-        stopCameraStream() {
-            let tracks = this.$refs.camera.srcObject.getTracks();
+    //     stopCameraStream() {
+    //         let tracks = this.$refs.camera.srcObject.getTracks();
 
-                    tracks.forEach(track => {
-                        track.stop();
-                    });
-            },
+    //                 tracks.forEach(track => {
+    //                     track.stop();
+    //                 });
+    //         },
     
-        takePhoto() {
-            if(!this.isPhotoTaken) {
-                this.isShotPhoto = true;
+    //     takePhoto() {
+    //         if(!this.isPhotoTaken) {
+    //             this.isShotPhoto = true;
 
-                const FLASH_TIMEOUT = 50;
+    //             const FLASH_TIMEOUT = 50;
 
-                setTimeout(() => {
-                this.isShotPhoto = false;
-                }, FLASH_TIMEOUT);
-            }
+    //             setTimeout(() => {
+    //             this.isShotPhoto = false;
+    //             }, FLASH_TIMEOUT);
+    //         }
             
-            this.isPhotoTaken = !this.isPhotoTaken;
+    //         this.isPhotoTaken = !this.isPhotoTaken;
             
-            const context = this.$refs.canvas.getContext('2d');
-            context.drawImage(this.$refs.camera, 0, 0, 450, 337.5);
+    //         const context = this.$refs.canvas.getContext('2d');
+    //         context.drawImage(this.$refs.camera, 0, 0, 450, 337.5);
             
-            const canvas = document.getElementById("photoTaken").toDataURL()
+    //         const canvas = document.getElementById("photoTaken").toDataURL()
            
-            this.link = canvas
+    //         this.link = canvas
 
-      }
+    //   }
     },
     created(){
         this.fetchItem(1,10)
