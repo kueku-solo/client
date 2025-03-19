@@ -93,8 +93,6 @@
 
 <script>
   import { mapActions, mapGetters } from 'vuex'
-  import axios from 'axios'
-  import Swal from 'sweetalert2'
   import Billing from '../components/Billing2.vue'
   
 

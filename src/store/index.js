@@ -4,6 +4,7 @@ import item from './module/item'
 import transaksi from './module/transaksi'
 import allUser from './module/user'
 import shift from './module/shift'
+import kategori from './module/kategori'
 
 Vue.use(Vuex)
 
@@ -38,6 +39,7 @@ export default new Vuex.Store({
     item,
     transaksi,
     allUser,
-    shift
+    shift,
+    kategori
   }
 })

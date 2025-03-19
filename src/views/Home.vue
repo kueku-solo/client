@@ -48,14 +48,38 @@
               </v-list-item-content>
             </v-list-item>
 
-            <v-list-item link @click="$router.push('/produk')" v-if="getRole === 'super' || getRole === 'admin'">
+            <!-- <v-list-item link @click="$router.push('/produk')" v-if="getRole === 'super' || getRole === 'admin'">
               <v-list-item-icon>
                 <v-icon>mdi-shopping</v-icon>
               </v-list-item-icon>
               <v-list-item-content>
                 <v-list-item-title>Produk</v-list-item-title>
               </v-list-item-content>
-            </v-list-item>
+            </v-list-item> -->
+
+            <v-list-group prepend-icon="mdi-shopping" v-if="getRole === 'super' || getRole === 'admin' ">
+                  <template v-slot:activator>
+                    <v-list-item-title>PRODUK</v-list-item-title>
+                  </template>
+    
+                  <v-list-item link class="ml-14" @click="$router.push('/produk')" v-if="getRole === 'super' || getRole === 'admin' ">
+                    <v-list-item-icon>
+                      <v-icon>mdi-basket</v-icon>
+                    </v-list-item-icon>
+                    <v-list-item-content>
+                      <v-list-item-title>ITEM</v-list-item-title>
+                    </v-list-item-content>
+                  </v-list-item>
+    
+                  <v-list-item link class="ml-14" @click="$router.push('/kategori')" v-if="getRole === 'super' ">
+                    <v-list-item-icon>
+                      <v-icon>mdi-basket-outline</v-icon>
+                    </v-list-item-icon>
+                    <v-list-item-content>
+                      <v-list-item-title>KATEGORI</v-list-item-title>
+                    </v-list-item-content>
+                  </v-list-item>
+            </v-list-group> 
 
             <v-list-item link @click="$router.push('/history')" v-if="getRole === 'super' || getRole === 'admin'">
               <v-list-item-icon>

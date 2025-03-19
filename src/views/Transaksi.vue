@@ -7,17 +7,39 @@
         <v-spacer></v-spacer>
       </v-toolbar>
     </v-card>
-    <v-row>
+    <v-row v-if="data !== null && !print">
+        <!-- item -->
         <v-col cols="12" md="7" v-if="!print">
-            <b-card class="ml-1"  footer-tag="footer" header-tag="header" >
-                <Tabelitem />                          
-            </b-card>  
+          <!-- <b-card class="ml-1"  footer-tag="footer" header-tag="header" >
+                    <TabelKategori />                          
+          </b-card>  -->
+              <b-tabs card v-if="!print">
+                  <b-tab title="All Item" active>
+                      <b-card-text>
+                        <b-card class="ml-1"  footer-tag="footer" header-tag="header" >
+                                <TabelAllitem/>                          
+                        </b-card>                      
+                      </b-card-text>
+                  </b-tab>
+                  <b-tab title="Kategori">
+                    <b-card-text>
+                        <b-card class="ml-1"  footer-tag="footer" header-tag="header" >
+                                <TabelKategori/>                          
+                        </b-card>                      
+                    </b-card-text>  
+                  </b-tab>
+              </b-tabs>            
         </v-col>
+        <!-- item -->
+
+        <!-- cart -->
         <v-col cols="12" md="5">  
           <b-card class="mr-1" v-if="!print" >                
               <Cart />
           </b-card>
         </v-col>
+        <!-- cart -->
+        
     </v-row>    
 
     <Billing v-if="print" />        
@@ -54,20 +76,22 @@
 
 <script>
   import { mapActions, mapGetters } from 'vuex'
-  import Tabelitem from '../components/TabelAllItem.vue'
+  import TabelAllitem from '../components/TabelAllItem.vue'
+  import TabelKategori from '../components/AllKategori.vue'
   import Billing from '../components/Billing.vue'
   import Cart from '../components/Cart.vue'
-  import Swal from 'sweetalert2'
 
   export default {
     data() {
       return {
         // shift
-        dialog: false
+        dialog: false,
+        tab:"one"
       }
     },
     components: {
-        Tabelitem,
+        TabelAllitem,
+        TabelKategori,
         Billing,
         Cart
     },
@@ -94,16 +118,10 @@
     },   
     methods: { 
         ...mapActions({
-            fetchItem: 'item/fetchAction',
             fetchShift: 'shift/getDataShift'
         }),               
     },
     created(){
-          if(this.getRole === 'kasir' || this.getRole === 'admin'){
-            if(this.data === null){
-                this.dialog = true
-            }
-          }
          this.fetchShift()
     }      
   }

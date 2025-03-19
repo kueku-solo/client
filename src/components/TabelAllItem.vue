@@ -1,9 +1,8 @@
 <template>
   <div class="overflow-auto"> 
     <v-text-field
-        v-if="shift === true && getRole === 'kasir' || getRole === 'super'"
         solo
-        label="Search"
+        label="Nama/Kode Barang"
         append-icon="mdi-magnify"
         v-on:keyup.enter="search(1)"
         class="mr-4 ml-4"
@@ -16,14 +15,12 @@
         :headers="headers"
         :items="allItem"
         class="elevation-1"
-        :items-per-page="perPage"
         :loading="loading"
-        hide-default-footer
+        :footer-props="{
+                    'items-per-page-options': [6, 10]
+                }"
+        :items-per-page="6"
     >
-        <!-- <template v-slot:item.image="{ item }">
-          <img :src="item.image" width="100" height="50"/>
-        </template> -->
-
         <template v-slot:item.harga="{ item }">
           <p>Rp {{getRupiah( item.harga)}}</p>
         </template>  
@@ -34,18 +31,6 @@
             </a> 
         </template>    
     </v-data-table>
-
-
-    <b-pagination
-    class="mt-2"
-    v-if="allItem.length > 0"
-    v-model="currentPage"
-    :total-rows="totalItem"      
-    :per-page="perPage"
-    aria-controls="my-table"
-    align="center"
-    ></b-pagination> 
-
   </div>
 
 </template>
@@ -59,7 +44,6 @@
       return {
         perPage: 20,
         currentPage: 1,
-        fields: ['Nama', 'Stok', 'Harga', 'Action'], 
         headers:[
             { text: 'Nama', value: 'nama' },
             { text: 'Stok', value: 'stok' },
@@ -71,9 +55,7 @@
     computed:{
         ...mapGetters({
         allItem: 'item/getAllItem',
-        totalItem: 'item/getTotalItem',
-        loading:'item/getLoading',
-        shift: 'shift/getShift'         
+        loading:'item/getLoading',        
         }),   
         getRole(){
           return this.$store.state.userRole
@@ -81,25 +63,17 @@
     },    
     methods:{
         ...mapMutations({
-          fillData: 'item/fillData',
-          fillTotal: 'item/fillTotal',  
+          fillData: 'item/fillData', 
           fillLoading: 'item/fillLoading'        
         }),          
         ...mapActions({
-          fetchItem: 'item/fetchAction',
           addItem: 'transaksi/addItem',
         }),       
-        search(page){          
-          if(this.src === ''){
-                this.fetchItem(1,this.perPage)
-          } else{
-            if(page === 1){
-              this.currentPage = 1
-            }         
+        search(){          
             this.fillLoading(true)
             this.fillData([])
             axios({
-              url: `https://kueku-server-15ecaf79af24.herokuapp.com/item/search?src=${this.src}&page=${this.currentPage}&limit=${this.perPage}`,
+              url: `https://kueku-server-15ecaf79af24.herokuapp.com/item/search?src=${this.src}`,
               method: 'get',
               headers:{
                   token : localStorage.getItem('token')
@@ -109,16 +83,12 @@
                     if(Number(data.Total) === 1){
                       this.plusItem(data.results[0])
                     }                     
-                    this.fillTotal(data.Total)
                     this.fillData(data.results)
-                    this.fillLoading(false)
-
-                                                                
+                    this.fillLoading(false)                                                               
                   })
                   .catch(err=>{
                       console.log(err)
-                  })        
-          }         
+                  })            
         },        
         getRupiah(uang){
             if(uang){
@@ -163,32 +133,8 @@
           }
         },           
     },
-    watch:{
-    currentPage: function(){
-          if(this.src === ''){
-            this.fetchItem(this.currentPage,this.perPage)
-          }else{
-            this.search()
-          }
-    },
-    shift: function(){
-        if(this.getRole === 'kasir'){
-          if(this.shift === true){
-            this.fetchItem(this.currentPage,this.perPage)       
-          }
-        }
-    }          
-    },
     created(){
-        if(this.getRole === 'kasir'){
-          if(this.shift === true){
-            this.fetchItem(this.currentPage,this.perPage)       
-          }
-        }else{
-          this.fetchItem(this.currentPage,this.perPage)       
-        }
-
-        this.search()
+      this.fillData([])
     }
   }
 </script>

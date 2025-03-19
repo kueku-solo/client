@@ -55,24 +55,6 @@
 
         <v-stepper-content step="2">
             <v-card>
-            <!-- <v-tabs color="red accent-4" right>
-                <v-tab v-model="kasKeluar">Kas Keluar</v-tab>
-                <v-tab v-model="kasMasuk">Kas Masuk</v-tab>
-
-                
-                <v-tab-item v-model="kasKeluar">
-                    <Keluar />
-                </v-tab-item>
-                
-                <v-tab-item v-model="kasMasuk">
-
-                    <Masuk />
-
-                </v-tab-item>
-                
-
-            </v-tabs> -->
-
             <b-tabs card >
                 <b-tab title="Kas Keluar" active>
                     <b-card-text>

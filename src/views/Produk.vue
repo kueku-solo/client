@@ -72,7 +72,18 @@
                     ></v-text-field>      
                 </v-col>                                   
             </v-row>      
-
+            <v-row>
+              <v-col cols="12" md="4">
+              <p>Kategori</p>
+                <b-form-select
+                    v-model="kat"
+                    :options="getKatProduk"
+                    class="mb-3"
+                    value-field="item"
+                    text-field="name"
+                ></b-form-select>
+              </v-col>
+            </v-row>
             <!-- foto -->
             <!-- <v-row>
                 <div id="app" class="web-camera-container">
@@ -157,6 +168,7 @@
         modal:null,
         harga:null,
         kodeBarang: '',
+        kat:'-'
             // foto
             // isCameraOpen: false,
             // isPhotoTaken: false,
@@ -168,6 +180,17 @@
     components: {
         Tabel
     },
+    computed:{
+        ...mapGetters({
+          allItem: 'item/getAllItem',
+          totalItem: 'item/getTotalItem',
+          loading: 'item/getLoading',
+          getKatProduk: 'kategori/getKatProduk'
+        }),        
+        getRole(){
+          return this.$store.state.userRole
+        }             
+    },  
     watch: {   
       modal: function(){
                 if(this.modal){
@@ -198,21 +221,12 @@
     
                 this.harga = rupiah
                 } 
-            },
-    },
-    computed:{
-        ...mapGetters({
-          allItem: 'item/getAllItem',
-          totalItem: 'item/getTotalItem',
-          loading: 'item/getLoading'
-        }),        
-        getRole(){
-          return this.$store.state.userRole
-        }             
-    },    
+            }
+    },  
     methods: { 
         ...mapActions({
          fetchItem: 'item/fetchAction',
+         fetcKategori: 'kategori/fetchKategoriProduk'
         }),               
         batal(){
             this.dialog = false
@@ -243,13 +257,14 @@
             }
             return al;
         }      ,  
-        tambahItem(){
+        tambahItem(){          
                 this.loading2 = true
                 let temp = {
                         nama: this.nama,
                         stok:this.stok,
                         modal : this.formatRupiahEsc(this.modal),
-                        harga:this.formatRupiahEsc(this.harga)
+                        harga:this.formatRupiahEsc(this.harga),
+                        kategori:this.kat
                 }
                 if(this.kodeBarang !== ''){
                   temp.kodeBarang = this.kodeBarang
@@ -265,6 +280,7 @@
                     data:temp
                     })
                     .then(({data}) =>{
+                        this.kat = '-'
                         this.kodeBarang = ''
                         this.nama = ''
                         this.stok = 0
@@ -350,6 +366,7 @@
     },
     created(){
         this.fetchItem(1,10)
+        this.fetcKategori()
       }
   }
 </script>

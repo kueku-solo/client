@@ -21,6 +21,11 @@ const routes = [
         path: '/transaksi',
         name: 'tansaksi',
         component: () => import( '../views/Transaksi.vue')
+      },  
+      {
+        path: '/kategori',
+        name: 'kategori',
+        component: () => import( '../views/Kategori.vue')
       },           
       {
         path: '/produk',

@@ -4,23 +4,29 @@
         solo
         label="Search"
         append-icon="mdi-magnify"
-        v-on:keyup.enter="search(1)"
+        v-on:keyup.enter="search()"
         class="mr-4 ml-4"
         clearable
         v-model="src"    
         style="margin-top: 10px;"    
     ></v-text-field>
     
+    <!-- tabel all item -->
     <v-data-table
+        v-if="tabel==='all'"
         :headers="headers"
         :items="allData"
         class="elevation-1"
         :loading="loading"
-        :per-page="perPage"
+        hide-default-footer
     >  
+        <template v-slot:item.kat="{ item }">
+          <p v-if="item.kategori !== undefined && item.kategori !== null">{{item.kategori.nama}}</p>
+          <p v-if="item.kategori === undefined || item.kategori === null">-</p>
+        </template>    
 
         <template v-slot:item.modal="{ item }">
-          <p>Rp {{getRupiah( item.modal)}}</p>
+          <p v-if="getRole === 'super'">Rp {{getRupiah( item.modal)}}</p>
         </template>
 
         <template v-slot:item.harga="{ item }">
@@ -41,6 +47,57 @@
             </a>  
         </template>    
     </v-data-table>
+    <b-pagination
+      class="mt-2"
+      v-if="allData.length > 0 && tabel === 'all'"
+      v-model="currentPage"
+      :total-rows="totalItem"      
+      :per-page="perPage"
+      aria-controls="my-table"
+      align="center"
+    ></b-pagination> 
+    <!-- tabel all item -->
+
+    <!-- tabel search -->
+    <v-data-table
+        v-if="tabel==='search'"
+        :headers="headers"
+        :items="allData"
+        class="elevation-1"
+        :loading="loading"
+        :footer-props="{
+                    'items-per-page-options': [5, 10]
+                }"
+        :items-per-page="5"
+    >  
+        <template v-slot:item.kat="{ item }">
+          <p v-if="item.kategori !== undefined">{{item.kategori.nama}}</p>
+          <p v-if="item.kategori === undefined">-</p>
+        </template>    
+
+        <template v-slot:item.modal="{ item }" v-if="getRole === 'super'">
+          <p>Rp {{getRupiah( item.modal)}}</p>
+        </template>
+
+        <template v-slot:item.harga="{ item }">
+          <p>Rp {{getRupiah( item.harga)}}</p>
+        </template>  
+     
+        <template v-slot:item.actions="{ item }" v-if="getRole === 'super' || getRole === 'admin'">
+            <a @click="formEdit(item)" v-if="getRole === 'super'" class="mr-2">
+              <v-icon color="green"  small>mdi-file-document-edit</v-icon>
+            </a> 
+
+            <a @click="formEditStokAdmin(item)" v-if="getRole === 'super' || getRole === 'admin'" class="mr-2">
+              <v-icon color="green" small>mdi-store-edit-outline</v-icon>
+            </a>             
+                
+            <a @click.prevent="deleteItem(item._id)" v-if="getRole === 'super'">
+                <v-icon color="red" small>mdi-delete</v-icon>
+            </a>  
+        </template>    
+    </v-data-table>     
+    <!-- tabel search -->
 
     <!-- form edit produk -->
     <v-dialog
@@ -104,7 +161,20 @@
                         v-on:keyup.enter="editItem()"
                     ></v-text-field>      
                 </v-col>                                   
-            </v-row>      
+            </v-row>  
+            
+            <v-row>
+              <v-col cols="12" md="4">
+              <p>Kategori</p>
+                <b-form-select
+                    v-model="kat"
+                    :options="getKatProduk"
+                    class="mb-3"
+                    value-field="item"
+                    text-field="name"
+                ></b-form-select>
+              </v-col>
+            </v-row>
 
             <!-- foto -->
             <!-- <v-row>
@@ -232,19 +302,23 @@
     import { mapGetters,mapActions,mapMutations } from 'vuex'
     import Swal from 'sweetalert2'
     import axios from 'axios'
+import kategori from '../store/module/kategori'
 
   export default {
     data() {
       return {
-        perPage: 25,
+        tabel: 'all',
+        perPage: 10,
         allData :[],
-
+        totalItem:0,
+        currentPage:1,
         // search
         loading2: false,
         src: '',
         dataSrc: [],
         headers:[            
           { text: 'Nama', value: 'nama' },
+          { text: 'Kategori', value: 'kat' },
           { text: 'Harga Modal', value: 'modal' },
           { text: 'Stok', value: 'stok' },
           { text: 'Harga Jual', value: 'harga' },
@@ -259,6 +333,7 @@
         modal:null,
         harga:null,
         kodeBarang: '',
+        kat:'-',
         // foto
         // isCameraOpen: false,
         // isPhotoTaken: false,
@@ -279,6 +354,7 @@
         ...mapGetters({
           loading: 'item/getLoading',
           allItem: 'item/getAllItem',
+          getKatProduk: 'kategori/getKatProduk'
         }),     
         getRole(){
           return this.$store.state.userRole
@@ -291,27 +367,32 @@
         ...mapMutations({
           fillLoading: 'item/fillLoading'        
         }),                        
-        search(page){                
+        search(){                
           if(this.src === ''){                
             this.fillLoading(true)
             this.allData = []
+            this.tabel = 'all'
             axios({
-              url: `https://kueku-server-15ecaf79af24.herokuapp.com/item?page=1&limit=5`,
+              url: `https://kueku-server-15ecaf79af24.herokuapp.com/item?page=${this.currentPage}&limit=${this.perPage}`,
               method: 'get',
               headers:{
                   token : localStorage.getItem('token')
               }
             })      
-                  .then(({data})=>{       
-                    this.allData = data.results       
+                  .then(({data})=>{      
+                    console.log(data)                   
+                    this.allData = data.results    
+                    this.totalItem = data.Total       
                     this.fillLoading(false)
                   })
                   .catch(err=>{
                       console.log(err)
                   })   
           } else{
+            this.currentPage = 1
             this.fillLoading(true)
             this.allData = []
+            this.tabel = 'search'
             axios({
               url: `https://kueku-server-15ecaf79af24.herokuapp.com/item/search?src=${this.src}`,
               method: 'get',
@@ -320,13 +401,14 @@
               }
             })      
                   .then(({data})=>{       
-                    this.allData = data.results       
+                    console.log(data)    
+                    this.allData = data.results                  
                     this.fillLoading(false)
                   })
                   .catch(err=>{
                       console.log(err)
                   })        
-          }         
+          }     
         },   
         getRupiah(uang){
             if(uang){
@@ -364,6 +446,10 @@
 
         // edit produk
         formEdit(data){
+            this.kat = '-'            
+            if(data.kategori !== undefined && data.kategori !== null){
+                this.kat = data.kategori._id
+            }
             this.tempId = data._id
             this.nama = data.nama
             this.modal = this.getRupiah(data.modal)
@@ -437,7 +523,19 @@
 
         // },        
         editItem(){
-                if(!this.loading2){             
+                if(!this.loading2){   
+                  let temp = {
+                    nama: this.nama,
+                    modal: this.formatRupiahEsc(this.modal),
+                    harga:this.formatRupiahEsc(this.harga),
+                    kodeBarang:this.kodeBarang,
+                    stok:this.stok  
+                  }          
+
+                  if(this.kat !== '-'){
+                    temp.kategori = this.kat
+                  }
+
                   this.loading2 = true
                     axios({
                         url: `https://kueku-server-15ecaf79af24.herokuapp.com/item/${this.tempId}`,
@@ -445,15 +543,9 @@
                         headers:{
                             token : localStorage.getItem('token')
                         },
-                        data:{
-                            nama: this.nama,
-                            modal: this.formatRupiahEsc(this.modal),
-                            harga:this.formatRupiahEsc(this.harga),
-                            kodeBarang:this.kodeBarang,
-                            stok:this.stok                      
-                        }
+                        data:temp
                         })
-                        .then(({data}) =>{                      
+                        .then(({data}) =>{                                            
                             this.loading2 = false                  
                             this.dialog = false
                             this.editOneData(data)
@@ -539,9 +631,12 @@
         }         
     },
     watch:{
+        currentPage: function(){
+          this.search()
+        },
         src: function(){
           if(this.src === ''){
-            this.allData = []
+            this.search()
           }
         },
         harga: function(){
@@ -576,6 +671,14 @@
         }                    
     },
     created(){
+      if(this.getRole === 'kasir'){
+        this.headers = [            
+          { text: 'Nama', value: 'nama' },
+          { text: 'Kategori', value: 'kat' },
+          { text: 'Stok', value: 'stok' },
+          { text: 'Harga Jual', value: 'harga' },
+          { text: 'Kode Barang', value: 'kodeBarang'}]
+      }
       this.search()
     }
   }

@@ -108,9 +108,7 @@
 
                     <v-card-subtitle>(TUNAI)</v-card-subtitle>
                     <h1 style="color: aliceblue;">Rp {{getRupiah(totalPenjualanTunai)}}</h1>
-                  </div>
-
-                  
+                  </div>                
                 </div>
               </v-card>               
             </v-col>     

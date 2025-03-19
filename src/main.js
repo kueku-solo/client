@@ -7,7 +7,6 @@ import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 
 import vuetify from './plugins/vuetify'
-import Vuetify from 'vuetify/lib'
 
 
 Vue.use(BootstrapVue)
