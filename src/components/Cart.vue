@@ -96,17 +96,27 @@
     width="1000"
     >      
       <v-card >
-        <v-card-title class="text-h5 grey lighten-2 mb-4">
+        <v-card-title class="text-h5 grey lighten-2 mb-4" v-if="transaksi.pembayaran !== 'Bank'">
         Total:   Rp {{ getRupiah(grandTotal) }}
+        </v-card-title>
+        <v-card-title class="text-h5 grey lighten-2 mb-4" v-if="transaksi.pembayaran === 'Bank'">
+        Total:   Rp {{ getRupiah(total) }}
         </v-card-title>
         <v-card-text>
           <v-container>
             <v-row>
-                <v-col cols="12" md="6">                  
+                <v-col cols="12" md="6" v-if="transaksi.pembayaran !== 'Bank'">
                     <v-text-field
                     label="Uang"
                     v-model="uang"
                     prefix="Rp"
+                    ></v-text-field>
+                </v-col> 
+                <v-col cols="12" md="6" v-if="transaksi.pembayaran === 'Bank'">   
+                    <v-text-field
+                    label="MDR"
+                    v-model="charge"
+                    prefix="%"
                     ></v-text-field>
                 </v-col> 
                 <v-col cols="12" md="6">                  
@@ -118,15 +128,16 @@
                 </v-col>                     
             </v-row>
             <v-row>
-                <v-col cols="12" md="6">   
+                <v-col cols="12" md="6" v-if="transaksi.pembayaran !== 'Bank'">
                     <h1>
                     Kembali:               
                     Rp {{getRupiah(kembalian)}}
                     </h1>
-                </v-col>           
+                </v-col>              
             </v-row>            
           </v-container>
-          <small>*isi jumlah uang pembeli</small>
+          <small v-if="transaksi.pembayaran !== 'Bank'">*isi jumlah uang pembeli</small>
+          <small v-if="transaksi.pembayaran === 'Bank'">*isi jumlah MDR Bank</small>
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
@@ -231,7 +242,7 @@
                     kembali: 0,
                     pin:""
                 },
-
+                charge:0,
                 dialog2: false,
             }
         },
@@ -267,6 +278,8 @@
                 if(flag){
                     this.dialog = true
                     this.uang = `${this.grandTotal}`
+                    this.total = this.grandTotal
+                    this.charge = 0
                 }                    
                 }
             },
@@ -277,11 +290,16 @@
 
                     this.addAntrian(this.transaksi)
             },
-            tambahTransaksi(){                
+            tambahTransaksi(){       
+                    if(this.transaksi.pembayaran === 'Tunai'){
+                        this.transaksi.total = this.grandTotal
+                        this.transaksi.bayar = this.formatRupiahEsc(this.uang)
+                    }else if(this.transaksi.pembayaran === 'Bank'){
+                        this.transaksi.total = this.total
+                        this.transaksi.bayar = this.total
+                    }        
                     this.transaksi.subTotal = this.subTotal
                     this.transaksi.diskon = this.formatRupiahEsc(this.diskon)
-                    this.transaksi.total = this.grandTotal
-                    this.transaksi.bayar = this.formatRupiahEsc(this.uang)
                     this.transaksi.listItem = this.items
                     if(this.transaksi.bayar < this.transaksi.total){
                             Swal.fire({
@@ -290,7 +308,6 @@
                             text: 'Uang tidak cukup!',
                             })
                     }else{
-
                                 this.transaksi.kasir = {username:this.userName,userId:this.userId}
                                 this.transaksi.id = '-'
                                 this.createTransaksi(this.transaksi)                                                                         
@@ -329,7 +346,6 @@
                 }
             },
             getTotalHargaItem(item){
-                console.log(item)
                 let tempTotal = item.harga * item.qty
 
                 let rumus = tempTotal - (tempTotal*item.disc/100)
@@ -409,6 +425,11 @@
                     
 
                     this.diskon = rupiah
+                }
+            },
+            charge: function(){
+                if(this.transaksi.pembayaran === 'Bank'){
+                  this.total =  this.grandTotal + (this.grandTotal * this.charge/100)
                 }
             }
         }

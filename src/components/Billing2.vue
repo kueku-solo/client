@@ -40,6 +40,8 @@
                 <br v-if="transaksi.diskon !== undefined && transaksi.diskon > 0">
                 <small style="font-weight: bold;">Total:Rp{{getRupiah(transaksi.totalHarga)}}</small>
                 <br>
+                <small>Metode:{{ transaksi.pembayaran }}</small>                       
+                <br>
                 <small>Bayar:Rp{{getRupiah(transaksi.bayar)}}</small>                       
                 <br>
                 <small>Kembali:Rp{{getRupiah(Number(transaksi.bayar) - Number(transaksi.totalHarga))}}</small>                   

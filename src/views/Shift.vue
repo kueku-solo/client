@@ -83,7 +83,7 @@
 
         <v-stepper-content step="3">
             <v-row>
-                <v-col cols="12" md="7">      
+                <v-col cols="12" md="6">      
                     <v-text-field
                     class="m-5"
                     label="Setor"
@@ -95,7 +95,7 @@
                     outlined
                     ></v-text-field>     
                 </v-col>
-                <v-col cols="12" md="5">
+                <v-col cols="12" md="3">
                     <h2>Total Transaksi Tunai :                     
                     <v-chip
                         class="ma-2"
@@ -105,7 +105,18 @@
                         Rp {{getRupiah(totalTransaksiTunai)}}
                     </v-chip>   
                     </h2>  
-                </v-col>            
+                </v-col>       
+                <v-col cols="12" md="3">
+                    <h2>Total Transaksi Bank :                     
+                    <v-chip
+                        class="ma-2"
+                        color="blue"
+                        text-color="white"
+                        >
+                        Rp {{getRupiah(totalTransaksiBank)}}
+                    </v-chip>   
+                    </h2>  
+                </v-col>                 
             </v-row>
             <hr>             
             <v-row>
@@ -233,6 +244,7 @@
         setor: null,
         saldoAkhir: null,
         totalTransaksiTunai:0,
+        totalTransaksiBank:0,
 
         dialog2:false,
         pin:''
@@ -251,10 +263,13 @@
             if(this.data !== null){
                 let totalTransaksi = 0
                 this.totalTransaksiTunai = 0
+                this.totalTransaksiBank = 0
                 this.data.transaksi.forEach(element => {
                     if(element.pembayaran === 'Tunai' && element.status === true){
                         totalTransaksi += element.totalHarga
                         this.totalTransaksiTunai += element.totalHarga
+                    }else if (element.pembayaran === 'Bank' && element.status === true){
+                        this.totalTransaksiBank += element.totalHarga
                     }
                 });
     

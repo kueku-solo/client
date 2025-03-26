@@ -36,6 +36,8 @@
                 <br v-if="transaksi.diskon > 0">
                 <small style="font-weight: bold;">Total:Rp{{getRupiah(transaksi.total)}}</small>
                 <br>
+                <small>Metode:{{ transaksi.pembayaran }}</small>                       
+                <br>
                 <small>Bayar:Rp{{getRupiah(transaksi.bayar)}}</small>
                 <br>
                 <small>Kembali:Rp{{getRupiah(transaksi.kembali)}}</small>                    
