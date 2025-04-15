@@ -326,7 +326,6 @@ import kategori from '../store/module/kategori'
             { text: 'Actions', value: 'actions', sortable: false },],        
 
         // form
-        loading2:false,
         dialog: false,
         nama: '',
         stok:0,
@@ -380,7 +379,6 @@ import kategori from '../store/module/kategori'
               }
             })      
                   .then(({data})=>{      
-                    console.log(data)                   
                     this.allData = data.results    
                     this.totalItem = data.Total       
                     this.fillLoading(false)
@@ -400,8 +398,7 @@ import kategori from '../store/module/kategori'
                   token : localStorage.getItem('token')
               }
             })      
-                  .then(({data})=>{       
-                    console.log(data)    
+                  .then(({data})=>{         
                     this.allData = data.results                  
                     this.fillLoading(false)
                   })

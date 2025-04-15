@@ -79,10 +79,7 @@
                   token : localStorage.getItem('token')
               }
             })      
-                  .then(({data})=>{ 
-                    if(Number(data.Total) === 1){
-                      this.plusItem(data.results[0])
-                    }                     
+                  .then(({data})=>{                   
                     this.fillData(data.results)
                     this.fillLoading(false)                                                               
                   })
