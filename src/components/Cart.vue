@@ -181,6 +181,7 @@
                         class="mr-4 ml-4"
                         clearable
                         v-model="transaksi.pin"
+                        type="password"
                     ></v-text-field>   
                     <v-progress-circular
                         v-if="getLoading"

@@ -175,7 +175,7 @@
        <!-- form setting user login  -->
         <v-dialog
         v-model="dialog"
-      max-width="400"
+        max-width="400"
         >    
           <v-card     class="mx-auto" v-if="!loading">
             <v-card-title class="text-h5 grey lighten-2 mb-4">
