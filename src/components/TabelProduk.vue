@@ -1,15 +1,23 @@
 <template>
   <div class="overflow-auto"> 
-    <v-text-field
+    <v-row>
+      <v-col cols="12" md="10">
+        <v-text-field
         solo
-        label="Search"
-        append-icon="mdi-magnify"
+        label="Nama / Kode Barang"
         v-on:keyup.enter="search()"
         class="mr-4 ml-4"
         clearable
-        v-model="src"    
-        style="margin-top: 10px;"    
-    ></v-text-field>
+        v-model="src"     
+        >
+      </v-text-field>
+      </v-col>
+      <v-col cols="12" md="2">
+        <v-btn  @click="search()" >Search<v-icon color="red" dense>mdi-magnify</v-icon></v-btn>
+      </v-col>
+    </v-row>
+
+
     
     <!-- tabel all item -->
     <v-data-table
@@ -303,6 +311,7 @@
     import Swal from 'sweetalert2'
     import axios from 'axios'
 import kategori from '../store/module/kategori'
+import { Button } from 'bootstrap'
 
   export default {
     data() {
