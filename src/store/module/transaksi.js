@@ -96,9 +96,9 @@ const actions = {
         qty: Number(element.qty),
         harga: element.harga
       }
-      if(Number(element.qty <= 0)){
-        fail = true
-      }
+      // if(Number(element.qty <= 0)){
+      //   fail = true
+      // }
       tempItem.push(temp)
     });
 

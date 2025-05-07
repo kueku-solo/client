@@ -114,7 +114,7 @@
             return al;
         }      ,          
         plusItem(data){
-          if(Number(data.stok) > 0){
+
             this.src = ''
             let temp = {
               id: data._id,
@@ -127,7 +127,7 @@
               laba: (Number(data.modal) - Number(data.harga)) * Number(data.stok)
             }
             this.addItem(temp)          
-          }
+          
         },           
     },
     created(){
