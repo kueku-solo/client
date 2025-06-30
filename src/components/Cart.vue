@@ -41,6 +41,10 @@
     </b-table>                
     <table>
         <tr>
+            <td>QtyTotal : </td>
+            <td>{{qtyTotal}}</td>
+        </tr>
+        <tr>
             <td>Subtotal : </td>
             <td>Rp {{getRupiah(subTotal) }}</td>
         </tr>
@@ -379,6 +383,12 @@
                     let rumus = tempTotal - (tempTotal*item.disc/100)
 
                         return accumulator + rumus;                    
+                }, 0)
+                return total;
+            },
+            qtyTotal: function() {
+                var total = this.items.reduce(function(accumulator, item) {
+                        return Number(accumulator) + Number(item.qty);                    
                 }, 0)
                 return total;
             },

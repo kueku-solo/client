@@ -46,7 +46,7 @@
               <v-icon color="green"  small>mdi-file-document-edit</v-icon>
             </a> 
 
-            <a @click="formEditStokAdmin(item)" v-if="getRole === 'super' || getRole === 'admin'" class="mr-2">
+            <a @click="formEditStokAdmin(item)" v-if="getRole === 'super'" class="mr-2">
               <v-icon color="green" small>mdi-store-edit-outline</v-icon>
             </a>             
                 
@@ -96,7 +96,7 @@
               <v-icon color="green"  small>mdi-file-document-edit</v-icon>
             </a> 
 
-            <a @click="formEditStokAdmin(item)" v-if="getRole === 'super' || getRole === 'admin'" class="mr-2">
+            <a @click="formEditStokAdmin(item)" v-if="getRole === 'super'" class="mr-2">
               <v-icon color="green" small>mdi-store-edit-outline</v-icon>
             </a>             
                 
