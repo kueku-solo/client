@@ -46,7 +46,7 @@
               <v-icon color="green"  small>mdi-file-document-edit</v-icon>
             </a> 
 
-            <a @click="formEditStokAdmin(item)" v-if="getRole === 'super'" class="mr-2">
+            <a @click="formEditStokAdmin(item)" v-if="getRole === 'super' || getRole === 'admin'" class="mr-2">
               <v-icon color="green" small>mdi-store-edit-outline</v-icon>
             </a>             
                 
@@ -96,7 +96,7 @@
               <v-icon color="green"  small>mdi-file-document-edit</v-icon>
             </a> 
 
-            <a @click="formEditStokAdmin(item)" v-if="getRole === 'super'" class="mr-2">
+            <a @click="formEditStokAdmin(item)" v-if="getRole === 'super' || getRole === 'admin'" class="mr-2">
               <v-icon color="green" small>mdi-store-edit-outline</v-icon>
             </a>             
                 
@@ -337,6 +337,7 @@ import { Button } from 'bootstrap'
         // form
         dialog: false,
         nama: '',
+        stokLama:0,
         stok:0,
         modal:null,
         harga:null,
@@ -573,11 +574,20 @@ import { Button } from 'bootstrap'
           this.dialogNama = true
           this.nama = item.nama
           this.stok = item.stok
+          this.stokLama = item.stok
           this.tempId = item._id
         },
         editStokAdmin(){
                 this.loading2 = true  
-                axios({
+                if(this.getRole === 'admin' && Number(this.stok) < Number(this.stokLama)){
+                  Swal.fire({
+                            icon: 'error',
+                            title: 'stok berkurang !',
+                            text: 'admin error',
+                            })       
+                this.loading2 = false
+                }else{
+                  axios({
                     url: `https://kueku-server-15ecaf79af24.herokuapp.com/item/editstok/${this.tempId}`,
                     method: 'put',
                     headers:{
@@ -602,7 +612,9 @@ import { Button } from 'bootstrap'
                             title: 'gagal !',
                             text: err.errors,
                             })                        
-                    })         
+                    })        
+                }
+                
         },        
 
         deleteItem(id){
